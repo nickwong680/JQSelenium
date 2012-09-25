@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace JQSelenium
 {
-    public interface IJQuerySelector
+    public interface IJQuerySelector : IEnumerable<JQueryTag>
     {
-        IJQueryTag Get();
+        JQueryTag Get();
     }
 }

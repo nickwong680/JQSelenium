@@ -65,10 +65,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="when_getting_tag_name.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="when_adding_new_class_to_selector.cs" />
+    <Compile Include="when_appending_text_to_element.cs" />
     <Compile Include="when_getting_a_jquery_selector.cs" />
     <Compile Include="when_getting_a_tag.cs" />
+    <Compile Include="when_getting_tag_name.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -43,11 +43,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="IJQuerySelector.cs" />
-    <Compile Include="IjQuerySelectorSelector.cs" />
     <Compile Include="IJQueryTag.cs" />
     <Compile Include="JQueryFactory.cs" />
+    <Compile Include="JQuerySelector.cs" />
     <Compile Include="JQueryTag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

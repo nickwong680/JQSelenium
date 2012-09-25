@@ -1,5 +1,6 @@
 using AcklenAvenue.Testing.ExpectedObjects;
 using Machine.Specifications;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 
 namespace JQSelenium.Specs
@@ -13,14 +14,16 @@ namespace JQSelenium.Specs
         Establish context = () =>
             {
                 var driver = new FirefoxDriver();
-                driver.Navigate().GoToUrl("http://www.google.com");
-
+                driver.Navigate().GoToUrl("http://api.jquery.com/find/");
                 _jquery = new JQueryFactory(driver);
 
                 _expectedTag = new JQueryTag
                     {
-                        Name = "some name",
+                        tagName = "body"
                     };
+                _expectedTag.webElement = (IWebElement) driver.FindElementByTagName("body");
+                _expectedTag.selector = "jQuery.find('body')[0]";
+
             };
 
         Because of = () => _result = _jquery.Query("body").Get();
