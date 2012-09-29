@@ -22,7 +22,7 @@ The functions try to mimic the jQuery usage, so for further reference go to [the
 
 ### How to?
 The library is based in three structures: 
-First you have a <br>jQueryFactory</br>. It recieves the WebDriver and executes the queries: 
+First you have a <b>jQueryFactory</b>. It recieves the WebDriver and executes the queries: 
 ```c#
 	driver = new FirefoxDriver();
 	driver.Navigate().GoToUrl("URL-you-want-to-test");
@@ -34,12 +34,18 @@ Then you can execute queries with the Query method:
 	jqf.Query("body");
 ```
 
-The Query method returns a <br>jQuerySelector</br> wich is a list of <br>jQueryTags</g>, from any jQuerySelector or jQueryTag you can execute any of the methods listed above and that way you interact with the DOM.
+The Query method returns a <b>jQuerySelector</b> wich is a list of <b>jQueryTags</b>, from any jQuerySelector or jQueryTag you can execute any of the methods listed above and that way you interact with the DOM.
 
+### Example
+```c#
+	FirefoxDriver driver = new FirefoxDriver(); // new webDriver
+	driver.Navigate().GoToUrl("http://api.jquery.com/find/"); //Navigate to the URL
+	JQueryFactory jqf = new JQueryFactory(driver); //Create the jQueryFactory
+	_testing_selector = jqf.Query("h1"); //Query the element in the DOM you want to access
+	_new_text = "Probando";
+	_new_tag = "<p id = \"jQ-selenium\">" + _new_text + "</p>"; //new Element in the DOM will be added
+	_testing_selector.after(_new_tag); //Adds the element after the previously queried element
+```
 
+You can see more examples in the JQSelenium.Specs folder.
 
-
-JQuery Selectors for Selenium WebDriver
-
-
-Inspired by SeleniumJQuery at https://github.com/Nthalk/SeleniumJQuery
