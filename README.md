@@ -4,19 +4,19 @@
 This library was inspired by SeleniumJQuery (made by Nthalk, https://github.com/Nthalk/SeleniumJQuery). It provides better usage than the jQuery Executor that comes with Selenium WebDriver.
 
 ###Function Summary
-The library provides the main manipulation methods in jQuery: 
-*add
-*addClass
-*after
-*append
-*appendTo
-*attr
-*css
-*get
-*hasClass
-*remove
-*text
-*val
+The library provides the main manipulation methods in jQuery: </br>
+* add
+* addClass
+* after
+* append
+* appendTo
+* attr
+* css
+* get
+* hasClass
+* remove
+* text
+* val
 
 The functions try to mimic the jQuery usage, so for further reference go to [the jQuery documentation](http://api.jquery.com/category/Manipulation/)
 
