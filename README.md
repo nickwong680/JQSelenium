@@ -21,7 +21,7 @@ The library provides the main manipulation methods in jQuery: </br>
 The functions try to mimic the jQuery usage, so for further reference go to [the jQuery documentation](http://api.jquery.com/category/Manipulation/)
 
 ### What do you need?
-You only need to have the Selenium WebDriver (you can find it [here](http://seleniumhq.org/projects/webdriver/)) and import it into your project: 
+You only need to have the Selenium WebDriver (you can find it [here](http://seleniumhq.org/projects/webdriver/)), import it into your project: 
 
 ```c#
 using OpenQA.Selenium.Firefox;
