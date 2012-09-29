@@ -20,7 +20,8 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
+    <NoWarn>169</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -65,12 +66,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="when_getting_html_of_element.cs" />
+    <Compile Include="when_checking_if_an_element_has_a_class.cs" />
+    <Compile Include="when_getting_attributes_of_an_element.cs" />
+    <Compile Include="when_getting_a_css_property_from_an_element.cs" />
+    <Compile Include="when_getting_value_of_element.cs" />
+    <Compile Include="when_modifying_an_attribute_from_an_element.cs" />
+    <Compile Include="when_modifying_a_css_property_from_an_element.cs" />
+    <Compile Include="when_modifying_html_of_element.cs" />
+    <Compile Include="when_modifying_text_of_element.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="when_adding_content_after_selector.cs" />
     <Compile Include="when_adding_new_class_to_selector.cs" />
     <Compile Include="when_appending_text_to_element.cs" />
     <Compile Include="when_getting_a_jquery_selector.cs" />
     <Compile Include="when_getting_a_tag.cs" />
     <Compile Include="when_getting_tag_name.cs" />
+    <Compile Include="when_modifying_value_of_html_element.cs" />
+    <Compile Include="when_removing_an_html_element.cs" />
+    <Compile Include="when_removing_an_html_element_using_selector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

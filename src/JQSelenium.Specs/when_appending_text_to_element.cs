@@ -20,7 +20,7 @@ namespace JQSelenium.Specs
 
         private Establish context = () =>
         {                      
-            var driver = new FirefoxDriver();
+            driver = new FirefoxDriver();
             driver.Navigate().GoToUrl("http://api.jquery.com/find/");
             _jquery = new JQueryFactory(driver);
             _expectedJquerySelectorSelector = _jquery.Query("h1");
@@ -30,11 +30,13 @@ namespace JQSelenium.Specs
         };
 
         private Because of = () => {
-
-            testing_element = testing_element.append(appending_Text);
+            testing_element.append(appending_Text);
             text_expected = (initial_Text + appending_Text).ToUpper();
         };
 
         private It should_have_the_expected_text= () => testing_element.text().ShouldEqual(text_expected);
+
+        Cleanup loaded_context = () => driver.Close();
+        static FirefoxDriver driver;
     }
 }

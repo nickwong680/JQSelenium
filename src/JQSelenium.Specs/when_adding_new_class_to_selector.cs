@@ -18,7 +18,7 @@ namespace JQSelenium.Specs
         {
             querying_tag = "h1"; // el selector al que se le va a agregar
             new_class_to_add = "NewClassName"; //el nombre de la clase and shit
-            var driver = new FirefoxDriver();
+            driver = new FirefoxDriver();
             driver.Navigate().GoToUrl("http://api.jquery.com/find/"); // el query
             JQueryFactory jqf = new JQueryFactory(driver);
             testing_element = jqf.Query(querying_tag); //digo, el query xD
@@ -28,7 +28,7 @@ namespace JQSelenium.Specs
         private Because of = () =>
         {
             testing_element = testing_element.addClass(new_class_to_add); // aqui deberia agregar la clase
-            expected_Class_Name = testing_element.Get().webElement.GetAttribute("Class"); //luego obtener el nombre de la clase.. y no quebrarse xD
+            expected_Class_Name = testing_element.Get()._webElement.GetAttribute("Class"); //luego obtener el nombre de la clase.. y no quebrarse xD
             String[] classes = expected_Class_Name.Split(' ');
             expected_Class_Name = classes[classes.Length - 1];
             Console.WriteLine(expected_Class_Name);
@@ -36,5 +36,8 @@ namespace JQSelenium.Specs
 
 
         private It should_have_the_new_class_added = () => expected_Class_Name.ShouldEqual(new_class_to_add);
+
+        Cleanup loaded_context = () => driver.Close();
+        static FirefoxDriver driver;
     }
 }
