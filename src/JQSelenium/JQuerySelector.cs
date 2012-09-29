@@ -628,5 +628,10 @@ namespace JQSelenium
         {
             execJS("jQuery(", ").removeClass('" + className + "');");
         }
+
+        public void before(string newTag)
+        {
+            
+        }
     }
 }
