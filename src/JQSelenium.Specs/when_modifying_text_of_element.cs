@@ -11,7 +11,7 @@ namespace JQSelenium.Specs
     {
         static JQueryFactory _jquery;
         const string _testString = "testString";
-        static JQueryTag _result;
+        static JQuerySelector _result;
 
         Establish context = () =>
         {

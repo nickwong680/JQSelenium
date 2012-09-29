@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using OpenQA.Selenium;
 
 namespace JQSelenium
@@ -11,38 +12,37 @@ namespace JQSelenium
     /// </summary>
     public class JQuerySelector : IEnumerable<JQueryTag>
     {
-        #region Class Members
         /// <summary>
-        /// Contains all the JQueryTags generated with the provided selector of the JQuerySelector
+        /// Used to execute javaScript code.
         /// </summary>
-        private List<JQueryTag> _subset;
-
-        /// <summary>
-        /// The selector provided by the JQueryFactory.
-        /// </summary>
-        private string _selector;
+        readonly IJavaScriptExecutor _js;
 
         /// <summary>
         /// An index used to iterate over all of the JQueryTags manually.
         /// </summary>
-        private int _iterator;
+        int _iterator;
 
         /// <summary>
-        /// Used to execute javaScript code.
+        /// The selector provided by the JQueryFactory.
         /// </summary>
-        private readonly IJavaScriptExecutor _js;
-        #endregion Class Members
+        string _selector;
+
+        /// <summary>
+        /// Contains all the JQueryTags generated with the provided selector of the JQuerySelector
+        /// </summary>
+        List<JQueryTag> _subset;
 
         #region Constructors
+
         /// <summary>
         /// Initializes a new JQuerySelector
         /// </summary>
         public JQuerySelector()
         {
-            this._subset = new List<JQueryTag>();
-            this._selector = "";
-            this._iterator = 0;
-            this._js = null;
+            _subset = new List<JQueryTag>();
+            _selector = "";
+            _iterator = 0;
+            _js = null;
         }
 
         /// <summary>
@@ -51,11 +51,11 @@ namespace JQSelenium
         /// <param name="jqt">Used to create a new JQuerySelector of a single JQueryTag</param>
         public JQuerySelector(JQueryTag jqt)
         {
-            this._subset = new List<JQueryTag>();
-            this._subset.Add(jqt);
-            this._selector = "jQuery(" + jqt._selector + ")";
-            this._iterator = 0;
-            this._js = jqt.getJS();
+            _subset = new List<JQueryTag>();
+            _subset.Add(jqt);
+            _selector = "jQuery(" + jqt._selector + ")";
+            _iterator = 0;
+            _js = jqt.getJS();
         }
 
         /// <summary>
@@ -66,25 +66,28 @@ namespace JQSelenium
         /// <param name="subset">Contains the webElements used to create JQueryTags</param>
         public JQuerySelector(IJavaScriptExecutor js, string selector, List<IWebElement> subset)
         {
-            this._selector = selector;
-            this._iterator = 0;
-            this._subset = new List<JQueryTag>();
-            this._js = js;
+            _selector = selector;
+            _iterator = 0;
+            _subset = new List<JQueryTag>();
+            _js = js;
 
             for (int i = 0; i < subset.Count; i++)
             {
                 try
                 {
-                    this._subset.Add(new JQueryTag(js, selector, i, subset[i]));
+                    _subset.Add(new JQueryTag(js, selector, i, subset[i]));
                 }
                 catch (StaleElementReferenceException)
                 {
+                    //Do nothing.
                 }
             }
         }
+
         #endregion
 
         #region add()
+
         /// <summary>
         ///  Add elements to the set of matched elements.
         /// <para>Source: http://api.jquery.com/add/ </para>
@@ -130,16 +133,18 @@ namespace JQSelenium
         /// <returns>JQuerySelector</returns>
         public JQuerySelector add(string selector, string context)
         {
-            Dictionary<string, Object> result =
+            var result =
                 (Dictionary<string, Object>) execJS("jQuery(", ").add('" + selector + "'," + context + ");");
-            string newSelector = "jQuery(" + this._selector + ").add('" + selector + "'," + context + ")";
+            string newSelector = "jQuery(" + _selector + ").add('" + selector + "'," + context + ")";
             _subset = objectToJQueryTagList(result);
             overwriteSelectors(newSelector);
             return this;
         }
+
         #endregion
 
         #region addClass()
+
         /// <summary>
         /// Adds the specified class(es) to each of the set of matched elements.
         /// <para>Source: http://api.jquery.com/addClass/ </para>
@@ -163,9 +168,11 @@ namespace JQSelenium
             }
             return this;
         }
+
         #endregion
 
         #region after()
+
         /// <summary>
         /// Insert content, specified by the parameter, after each element in the set of matched elements.
         /// <para>Source: http://api.jquery.com/after/ </para>
@@ -179,7 +186,7 @@ namespace JQSelenium
         {
             Object result;
             string resultingContent = "";
-            foreach (var s in content_content)
+            foreach (string s in content_content)
             {
                 if (requiresApostrophe(s))
                 {
@@ -196,9 +203,21 @@ namespace JQSelenium
             _subset = objectToJQueryTagList(result);
             return this;
         }
-        #endregion 
+
+        #endregion
+
+        string Fix(string toFix)
+        {
+            if (requiresApostrophe(toFix))
+            {
+                return "'" + toFix + "'";
+            }
+            
+            return toFix;            
+        }
 
         #region append()
+
         /// <summary>
         /// Insert content, specified by the parameter, to the end of each element in the set of matched elements.
         /// <para>Source: http://api.jquery.com/append/ </para>
@@ -213,27 +232,17 @@ namespace JQSelenium
         public JQuerySelector append(params string[] content_content)
         {
             Object result;
-            string resultingContent = "";
-            foreach (var s in content_content)
-            {
-                if (requiresApostrophe(s))
-                {
-                    resultingContent += "'" + s + "',";
-                }
-                else
-                {
-                    resultingContent += s + ",";
-                }
-            }
-            resultingContent = resultingContent.Remove(resultingContent.Length - 1);
+            var resultingContent = string.Join(",", content_content.Select(Fix));
             Console.WriteLine(resultingContent);
             result = execJS("jQuery(", ").append(" + resultingContent + ");");
             _subset = objectToJQueryTagList(result);
             return this;
         }
-        #endregion 
+
+        #endregion
 
         #region appendTo()
+
         /// <summary>
         /// Insert every element in the set of matched elements to the end of the target.
         /// <para>Source: http://api.jquery.com/appendTo/ </para>
@@ -253,9 +262,11 @@ namespace JQSelenium
             }
             return this;
         }
-        #endregion 
+
+        #endregion
 
         #region attr()
+
         /// <summary>
         /// Get the value of an attribute for the first element in the set of matched elements.
         /// <para>Source: http://api.jquery.com/attr/#attr1 </para>
@@ -264,10 +275,9 @@ namespace JQSelenium
         /// <returns>String containing the element's attribute value.</returns>
         public string attr(string attribute_name)
         {
-
             return _subset[0]._webElement.GetAttribute(attribute_name);
         }
-        
+
         /// <summary>
         /// Set one or more attributes for the set of matched elements.
         /// <para>Source: http://api.jquery.com/attr/#attr2 </para>
@@ -287,20 +297,22 @@ namespace JQSelenium
             }
             return this;
         }
+
         #endregion
 
         #region css()
+
         /// <summary>
         /// Get the value of a style property for the first element in the set of matched elements.
         /// <para>Source: http://api.jquery.com/css/#css1 </para>
         /// </summary>
         /// <param name="css_property">A CSS property.</param>
         /// <returns>String containing the CSS property value.</returns>
-        public string css (string css_property)
+        public string css(string css_property)
         {
             return _subset[0].css(css_property);
         }
-        
+
         /// <summary>
         /// Set one or more CSS properties for the set of matched elements.
         /// <para>Source: http://api.jquery.com/css/#css2 </para>
@@ -320,22 +332,25 @@ namespace JQSelenium
             }
             return this;
         }
+
         #endregion
 
         #region execJS()
+
         ///<summary>
         /// Executes a javascript function by concatenating a prefix and a suffix to the selector of the JQuerySelector.
         ///</summary>
         /// <param name="prefix">It represents all the javascript code that goes before the selector.</param>
         /// <param name="suffix">It represents all the javascript code that goes after the selector.</param>
-        private Object execJS(string preffix, string suffix)
+        Object execJS(string preffix, string suffix)
         {
-            Console.WriteLine("return " + preffix + this._selector + suffix);
-            return _js.ExecuteScript("return " + preffix + this._selector + suffix);
+            return _js.ExecuteScript("return " + preffix + _selector + suffix);
         }
+
         #endregion
 
         #region get()
+
         /// <summary>
         /// Returns the next element in the JQuerySelector.
         /// </summary>
@@ -352,15 +367,17 @@ namespace JQSelenium
         /// <returns>JQueryTag containing a webElement.</returns>
         public JQueryTag Get(int index)
         {
-            if(index < _subset.Count)
+            if (index < _subset.Count)
             {
                 return _subset[index];
-            }    
+            }
             return null;
         }
-        #endregion 
+
+        #endregion
 
         #region hasClass()
+
         /// <summary>
         /// Determine whether any of the matched elements are assigned the given class.
         /// <para>Source: http://api.jquery.com/hasClass/ </para>
@@ -377,16 +394,18 @@ namespace JQSelenium
             }
             return false;
         }
+
         #endregion
 
         #region html()
+
         /// <summary>
         /// Get the HTML contents of the first element in the set of matched elements.
         /// <para>Source: http://api.jquery.com/html/#html1 </para>
         /// </summary>
         /// <returns>A string containing the HTML contents of the first element in the set of matched 
         /// elements.</returns>
-        public string html ()
+        public string html()
         {
             return execJS("jQuery(", ").html()").ToString();
         }
@@ -400,13 +419,14 @@ namespace JQSelenium
         public JQuerySelector html(string htmlString)
         {
             Object result = execJS("jQuery(", ").html('" + htmlString + "')");
-            Console.WriteLine(result.ToString());
-            this._subset = objectToJQueryTagList(result);
+            _subset = objectToJQueryTagList(result);
             return this;
         }
+
         #endregion
 
         #region isEmpty()
+
         /// <summary>
         /// Determines if the JQuerySelector contains any elements
         /// </summary>
@@ -414,33 +434,33 @@ namespace JQSelenium
         /// <para>False if it contains elements.</para></returns>
         public bool isEmpty()
         {
-            if (_subset.Count == 0)
-                return true;
-            return false;
+            return !_subset.Any();
         }
-        #endregion 
+
+        #endregion
 
         #region objectToJQueryTagList()
+
         /// <summary>
         /// Converts an object returned from a javaScript function into a list of JQueryTags
         /// </summary>
         /// <param name="result">The result of the javaScript code.</param>
         /// <returns>A list containing all JQueryTags</returns>
-        private List<JQueryTag> objectToJQueryTagList(Object result)
+        List<JQueryTag> objectToJQueryTagList(Object result)
         {
-            List<JQueryTag> jQueryTags = new List<JQueryTag>();
-            if (result.GetType() == (new Dictionary<string, Object>()).GetType())
+            var jQueryTags = new List<JQueryTag>();
+            if (result is Dictionary<string,Object>)
             {
-                Dictionary<string, Object> dictionary = (Dictionary<string, Object>)result;
+                var dictionary = (Dictionary<string, Object>) result;
                 int length = Convert.ToInt32(dictionary["length"]);
                 for (int i = 0; i < length; i++)
                 {
-                    jQueryTags.Add(new JQueryTag(_js, _selector, i, (IWebElement)dictionary[Convert.ToString(i)]));
+                    jQueryTags.Add(new JQueryTag(_js, _selector, i, (IWebElement) dictionary[Convert.ToString(i)]));
                 }
             }
             else
             {
-                List<IWebElement> webElements = new List<IWebElement>(((ReadOnlyCollection<IWebElement>)result));
+                var webElements = new List<IWebElement>(((ReadOnlyCollection<IWebElement>) result));
                 for (int i = 0; i < webElements.Count; i++)
                 {
                     jQueryTags.Add(new JQueryTag(_js, _selector, i, webElements[i]));
@@ -448,24 +468,28 @@ namespace JQSelenium
             }
             return jQueryTags;
         }
-        #endregion 
+
+        #endregion
 
         #region overwriteSelectors()
+
         /// <summary>
         /// Overwrites all of the selectors of each of the JQueryTags and the JQuerySelector
         /// </summary>
         /// <param name="selector">The new selector for the JQuerySelector and its JQueryTags</param>
         public void overwriteSelectors(string selector)
         {
-            this._selector = selector;
-            for (int i = 0; i < _subset.Count; i++)
+            _selector = selector;
+            for (var i = 0; i < _subset.Count; i++)
             {
-                _subset[i]._selector = selector +"["+i+"]";
+                _subset[i]._selector = selector + "[" + i + "]";
             }
         }
-        #endregion 
+
+        #endregion
 
         #region remove()
+
         /// <summary>
         /// Remove the set of matched elements from the DOM.
         /// <para>Source: http://api.jquery.com/remove/ </para>
@@ -481,20 +505,22 @@ namespace JQSelenium
         /// </summary>
         /// <param name="selector">A selector expression that filters the set of matched elements to be 
         /// removed.</param>
-        public void remove (string selector)
+        public void remove(string selector)
         {
             execJS("jQuery(", ").remove('" + selector + "')");
         }
-        #endregion 
+
+        #endregion
 
         #region requiresApostrophe()
+
         /// <summary>
         /// Determines if a parameter of a javaScript function requires apostrophes around it.
         /// </summary>
         /// <param name="parameter">The parameter of a javaScript function</param>
         /// <returns>True if it requires to be wrapped in apostrophes.
         /// <para>False if it doesn't require to be wrapped in apostrophes.</para></returns>
-        public bool requiresApostrophe(string parameter)
+        bool requiresApostrophe(string parameter)
         {
             if (parameter.Split('(')[0].Contains("function") || parameter.Split('.')[0].Contains("document")
                 || parameter.Split('(')[0].Contains("$") || parameter.Split('(')[0].Contains("jQuery"))
@@ -503,9 +529,11 @@ namespace JQSelenium
             }
             return true;
         }
-        #endregion 
+
+        #endregion
 
         #region text()
+
         /// <summary>
         /// Get the combined text contents of each element in the set of matched elements, including their descendants.
         /// <para>Source: http://api.jquery.com/text/#text1 </para>
@@ -542,9 +570,11 @@ namespace JQSelenium
             _subset = objectToJQueryTagList(result);
             return this;
         }
-        #endregion 
+
+        #endregion
 
         #region val()
+
         /// <summary>
         /// Get the current value of the first element in the set of matched elements.
         /// <para>Source: http://api.jquery.com/val/#val1 </para>
@@ -565,13 +595,15 @@ namespace JQSelenium
         /// <returns>JQuerySelector containing the modified elements.</returns>
         public JQuerySelector val(string value)
         {
-            Object result = execJS("jQuery(", ").val('"+value+"');");
-            this._subset = objectToJQueryTagList(result);
+            Object result = execJS("jQuery(", ").val('" + value + "');");
+            _subset = objectToJQueryTagList(result);
             return this;
         }
-        #endregion 
+
+        #endregion
 
         #region IEnumerator
+
         public IEnumerator<JQueryTag> GetEnumerator()
         {
             for (int i = 0; i < _subset.Count; i++)
@@ -584,6 +616,17 @@ namespace JQSelenium
         {
             return GetEnumerator();
         }
-        #endregion 
+
+        #endregion
+
+        public void removeClass()
+        {
+            execJS("jQuery(", ").removeClass();");
+        }
+
+        public void removeClass(string className)
+        {
+            execJS("jQuery(", ").removeClass('" + className + "');");
+        }
     }
 }

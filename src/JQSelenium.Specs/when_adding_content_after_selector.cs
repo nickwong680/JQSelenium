@@ -1,37 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Machine.Specifications;
+﻿using Machine.Specifications;
 using OpenQA.Selenium.Firefox;
 
 namespace JQSelenium.Specs
-{ //-----> Pending
-    internal class when_adding_content_after_selector
+{
+    class when_adding_content_after_selector
     {
-        private static JQuerySelector _testing_selector;
-        private static string _new_tag;
-        private static string _new_text;
-        private static JQuerySelector _expected_selector;
-        private static JQueryFactory jqf;
-        private Establish context = () =>
-        {
-            driver = new FirefoxDriver();
-            driver.Navigate().GoToUrl("http://api.jquery.com/find/");
-            jqf = new JQueryFactory(driver);
-            _testing_selector = jqf.Query("h1");
-            _new_text = "Probando";
-            _new_tag = "<p id = \"jQ-selenium\">" + _new_text + "</p>";
-        };
+        static JQuerySelector _testingSelector;
+        static string _newTag;
+        static string _newText;
+        static JQuerySelector _expectedSelector;
+        static JQueryFactory _jqf;
+        static FirefoxDriver _driver;
 
-        private Because of = () => { 
-            _testing_selector.after(_new_tag);
-            _expected_selector = jqf.Query("#jQ-selenium");
-        };
+        Establish context = () =>
+                                {
+                                    _driver = new FirefoxDriver();
+                                    _driver.Navigate().GoToUrl("http://api.jquery.com/find/");
+                                    _jqf = new JQueryFactory(_driver);
+                                    _testingSelector = _jqf.Query("h1");
+                                    _newText = "Probando";
+                                    _newTag = "<p id = \"jQ-selenium\">" + _newText + "</p>";
+                                };
 
-        private It should_return_the_expected_tag = () => _expected_selector.isEmpty().ShouldBeFalse();
+        Because of = () =>
+                         {
+                             _testingSelector.after(_newTag);
+                             _expectedSelector = _jqf.Query("#jQ-selenium");
+                         };
 
-        Cleanup loaded_context = () => driver.Close();
-        static FirefoxDriver driver;
+        It should_return_the_expected_tag = () => _expectedSelector.isEmpty().ShouldBeFalse();
+
+        Cleanup when_finished = () => _driver.Close();
     }
 }

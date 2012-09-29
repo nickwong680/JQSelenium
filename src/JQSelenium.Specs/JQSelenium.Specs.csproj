@@ -66,6 +66,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="given_a_jquery_factory_context.cs" />
     <Compile Include="when_getting_html_of_element.cs" />
     <Compile Include="when_checking_if_an_element_has_a_class.cs" />
     <Compile Include="when_getting_attributes_of_an_element.cs" />
@@ -85,6 +86,8 @@
     <Compile Include="when_modifying_value_of_html_element.cs" />
     <Compile Include="when_removing_an_html_element.cs" />
     <Compile Include="when_removing_an_html_element_using_selector.cs" />
+    <Compile Include="when_removing_an_specific_class.cs" />
+    <Compile Include="when_removing_a_class.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

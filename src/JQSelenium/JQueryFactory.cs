@@ -33,16 +33,16 @@ namespace JQSelenium
         /// </returns>
         public JQuerySelector Query(string selector)
         {
-            Object result = ((IJavaScriptExecutor) _js).ExecuteScript("return jQuery.find('" + selector + "');");
+            var result = _js.ExecuteScript("return jQuery.find('" + selector + "');");
             JQuerySelector jqs = null;
 
-            if (result.GetType() == typeof(ReadOnlyCollection<Object>))
+            if (result is ReadOnlyCollection<Object>)
             {
                 jqs = new JQuerySelector(_js, "jQuery.find('" + selector + "')", new List<IWebElement>());
             }else
             {
-                ReadOnlyCollection<IWebElement> queryResult = (ReadOnlyCollection<IWebElement>)result;
-                List<IWebElement> queryResultList = queryResult.ToList();
+                var queryResult = (ReadOnlyCollection<IWebElement>)result;
+                var queryResultList = queryResult.ToList();
 
                 jqs = new JQuerySelector(_js, "jQuery.find('" + selector + "')", queryResultList);
             }

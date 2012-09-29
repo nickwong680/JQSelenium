@@ -341,10 +341,9 @@ namespace JQSelenium
         /// Receives the index position of the element in the set and the old text value as arguments.</para>
         /// </param>
         /// <returns>JQuerySelector containing the modified elements.</returns>
-        public JQueryTag text(string textString)
+        public JQuerySelector text(string textString)
         {
-            execJS("jQuery(", ").text('" + textString + "')");
-            return this;
+            return ToJQuerySelector().text(textString); 
         }
         #endregion text()
 
