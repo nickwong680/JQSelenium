@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="given_a_jquery_factory_context.cs" />
+    <Compile Include="when_adding_content_before_selector.cs" />
     <Compile Include="when_getting_html_of_element.cs" />
     <Compile Include="when_checking_if_an_element_has_a_class.cs" />
     <Compile Include="when_getting_attributes_of_an_element.cs" />
