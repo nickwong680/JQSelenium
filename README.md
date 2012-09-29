@@ -1,7 +1,7 @@
 ##JQSelenium
 ==========
 ###General Information
-This library was inspired by SeleniumJQuery (made by Nthalk, https://github.com/Nthalk/SeleniumJQuery). It provides better usage than the jQuery Executor that comes with Selenium WebDriver.
+This library was inspired by SeleniumJQuery (made by Nthalk for java, https://github.com/Nthalk/SeleniumJQuery). this C# library provides better usage than the jQuery Executor that comes with Selenium WebDriver.
 
 ###Function Summary
 The library provides the main manipulation methods in jQuery: </br>
