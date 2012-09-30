@@ -1,36 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Machine.Specifications;
-using OpenQA.Selenium.Firefox;
+﻿using Machine.Specifications;
 
 namespace JQSelenium.Specs
 {
-    class when_modifying_a_css_property_from_an_element
+    internal class when_modifying_a_css_property_from_an_element : given_a_jquery_factory_context
     {
-        private static JQueryFactory _jQuery;
-        static string new_color;
-        private static string _result;
-        private static JQuerySelector testing_selector;
+        static string _newColor;
+        static string _result;
+        static JQuerySelector _testingSelector;
+
         Establish context = () =>
-        {
-            driver = new FirefoxDriver();
-            driver.Navigate().GoToUrl("http://api.jquery.com/find/");
-            _jQuery = new JQueryFactory(driver);
-            new_color = "rgba(0, 1, 1, 1)";
-            testing_selector = _jQuery.Query("h1");
-        };
+            {
+                _newColor = "rgba(0, 1, 1, 1)";
+                _testingSelector = jQueryFactory.Query("h1");
+            };
 
-        private Because of = () =>
-        {
-            testing_selector = testing_selector.css("color", new_color);
-            _result = testing_selector.Get().css("color");
-        };
+        Because of = () =>
+            {
+                _testingSelector = _testingSelector.css("color", _newColor);
+                _result = _testingSelector.Get().css("color");
+            };
 
-        It should_have_the_attribute_modified = () => _result.ShouldEqual(new_color);
-
-        Cleanup loaded_context = () => driver.Close();
-        static FirefoxDriver driver;
+        It should_have_the_attribute_modified = () => _result.ShouldEqual(_newColor);
     }
 }

@@ -10,17 +10,17 @@ namespace JQSelenium.Specs
         static string _newClassName;
 
         Establish context = () =>
-                                {
-                                    _newClassName = "randomClass";
-                                    _className = "jq-clearfix";
-                                    _jQuerySelector = jQueryFactory.Query("." + _className);
-                                    _jQuerySelector.addClass(_newClassName);
-                                };
+            {
+                _newClassName = "randomClass";
+                _className = "jq-clearfix";
+                _jQuerySelector = jQueryFactory.Query("." + _className);
+                _jQuerySelector.addClass(_newClassName);
+            };
 
         Because of = () => _jQuerySelector.removeClass(_className);
 
         It should_have_only_one_class_name = () => _jQuerySelector.hasClass(_newClassName).ShouldBeTrue();
-        
+
         It should_remove_the_class = () => _jQuerySelector.hasClass(_className).ShouldBeFalse();
     }
 }

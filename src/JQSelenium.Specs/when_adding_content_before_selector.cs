@@ -2,8 +2,13 @@ using Machine.Specifications;
 
 namespace JQSelenium.Specs
 {
-    class when_adding_content_before_selector : given_a_jquery_factory_context
+    internal class when_adding_content_before_selector : given_a_jquery_factory_context
     {
+        static string _newText;
+        static string _newTag;
+        static JQuerySelector _testingSelector;
+        static JQuerySelector _expectedSelector;
+
         Establish context = () =>
             {
                 _testingSelector = jQueryFactory.Query("h1");
@@ -18,11 +23,5 @@ namespace JQSelenium.Specs
             };
 
         It should_return_the_expected_tag = () => _expectedSelector.isEmpty().ShouldBeFalse();
-
-
-        static string _newText;
-        static string _newTag;
-        static JQuerySelector _testingSelector;
-        static JQuerySelector _expectedSelector;
     }
 }

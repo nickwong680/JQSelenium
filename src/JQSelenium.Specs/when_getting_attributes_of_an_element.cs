@@ -1,34 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Machine.Specifications;
-using OpenQA.Selenium.Firefox;
+﻿using Machine.Specifications;
 
 namespace JQSelenium.Specs
 {
-    class when_getting_attributes_of_an_element
+    internal class when_getting_attributes_of_an_element : given_a_jquery_factory_context
     {
-        private static JQueryFactory _jQuery;
-        static string expected_class_name;
-        private static JQueryTag testing_tag;
-        private static string _result;
+        static string _expectedClassName;
+        static JQueryTag _testingTag;
+        static string _result;
+
         Establish context = () =>
-        {
-            driver = new FirefoxDriver();
-            driver.Navigate().GoToUrl("http://api.jquery.com/find/");
-            _jQuery = new JQueryFactory(driver);
-            expected_class_name = "testing_class";
-            JQuerySelector testing_selector = _jQuery.Query("h1");
-            testing_selector = testing_selector.addClass(expected_class_name);
-            testing_tag = testing_selector.Get();
-        };
+            {
+                _expectedClassName = "testing_class";
+                var testingSelector = jQueryFactory.Query("h1");
+                testingSelector = testingSelector.addClass(_expectedClassName);
+                _testingTag = testingSelector.Get();
+            };
 
-        private Because of = () => _result = testing_tag.attr("class");
+        Because of = () => _result = _testingTag.attr("class");
 
-        It should_return_the_tags_name = () => _result.ShouldEqual(expected_class_name);
-
-        Cleanup loaded_context = () => driver.Close();
-        static FirefoxDriver driver;
+        It should_return_the_tags_name = () => _result.ShouldEqual(_expectedClassName);
     }
 }

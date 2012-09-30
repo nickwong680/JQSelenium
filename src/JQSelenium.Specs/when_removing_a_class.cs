@@ -9,11 +9,11 @@ namespace JQSelenium.Specs
         static string _newClassName;
 
         Establish context = () =>
-                                {
-                                    _newClassName = "randomClass";
-                                    _className = "jq-clearfix";
-                                    _jqs = jQueryFactory.Query("." + _className);
-                                };
+            {
+                _newClassName = "randomClass";
+                _className = "jq-clearfix";
+                _jqs = jQueryFactory.Query("." + _className);
+            };
 
         Because of = () => _jqs.removeClass();
 

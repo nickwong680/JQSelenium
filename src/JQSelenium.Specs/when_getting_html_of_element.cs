@@ -1,35 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Machine.Specifications;
-using OpenQA.Selenium.Firefox;
+﻿using Machine.Specifications;
 
 namespace JQSelenium.Specs
 {
-    class when_getting_html_of_element
+    internal class when_getting_html_of_element : given_a_jquery_factory_context
     {
+        static JQuerySelector _jQuerySelector;
+        static JQueryTag _jQueryTag;
+        static string _expectedHtml;
+        static object _resultingHtml;
+
         Establish load_context = () =>
             {
-                driver = new FirefoxDriver();
-                driver.Navigate().GoToUrl("http://api.jquery.com/find/");
-                jqf = new JQueryFactory(driver);
-                jqs = jqf.Query("h1");
-                jqt = jqs.Get();
-                expectedHtml = "jQuery API";
+                _jQuerySelector = jQueryFactory.Query("h1");
+                _jQueryTag = _jQuerySelector.Get();
+                _expectedHtml = "jQuery API";
             };
 
-        Because of = () => resultingHtml = jqt.html();
+        Because of = () => _resultingHtml = _jQueryTag.html();
 
-        It should_return_its_html_content = () => resultingHtml.ShouldEqual(expectedHtml);
-
-        Cleanup loaded_context = () => driver.Close();
-
-        static JQueryFactory jqf;
-        static FirefoxDriver driver;
-        static JQuerySelector jqs;
-        static JQueryTag jqt;
-        static string expectedHtml;
-        static object resultingHtml;
+        It should_return_its_html_content = () => _resultingHtml.ShouldEqual(_expectedHtml);
     }
 }

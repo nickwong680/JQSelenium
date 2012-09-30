@@ -1,42 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AcklenAvenue.Testing.ExpectedObjects;
 using Machine.Specifications;
-using OpenQA.Selenium.Firefox;
 
 namespace JQSelenium.Specs
 {
-    internal class when_appending_text_to_element
+    internal class when_appending_text_to_element : given_a_jquery_factory_context
     {
-        private static JQueryFactory _jquery;
-        private static JQueryTag testing_element;
-        private static String initial_Text;
-        private static String final_Text;
-        private static String appending_Text;
-        private static String text_expected;
-        private static JQuerySelector _expectedJquerySelectorSelector;
+        static JQueryTag _testingElement;
+        static String _initialText;
+        static String _finalText;
+        static String _appendingText;
+        static String _textExpected;
+        static JQuerySelector _expectedJquerySelectorSelector;
 
-        private Establish context = () =>
-        {                      
-            driver = new FirefoxDriver();
-            driver.Navigate().GoToUrl("http://api.jquery.com/find/");
-            _jquery = new JQueryFactory(driver);
-            _expectedJquerySelectorSelector = _jquery.Query("h1");
-            testing_element = _expectedJquerySelectorSelector.Get();
-            initial_Text = testing_element.text();
-            appending_Text = " Aw yeah";
-        };
+        Establish context = () =>
+            {
+                _expectedJquerySelectorSelector = jQueryFactory.Query("h1");
+                _testingElement = _expectedJquerySelectorSelector.Get();
+                _initialText = _testingElement.text();
+                _appendingText = " Aw yeah";
+            };
 
-        private Because of = () => {
-            testing_element.append(appending_Text);
-            text_expected = (initial_Text + appending_Text).ToUpper();
-        };
+        Because of = () =>
+            {
+                _testingElement.append(_appendingText);
+                _textExpected = (_initialText + _appendingText).ToUpper();
+            };
 
-        private It should_have_the_expected_text= () => testing_element.text().ShouldEqual(text_expected);
-
-        Cleanup loaded_context = () => driver.Close();
-        static FirefoxDriver driver;
+        It should_have_the_expected_text = () => _testingElement.text().ShouldEqual(_textExpected);
     }
 }
