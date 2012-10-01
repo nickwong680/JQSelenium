@@ -1,34 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Machine.Specifications;
-using OpenQA.Selenium.Firefox;
+﻿using Machine.Specifications;
 
 namespace JQSelenium.Specs
 {
-    class when_getting_value_of_element
+    internal class when_getting_value_of_element : given_a_jquery_factory_context
     {
+        static JQueryTag _jQueryTag;
+        static string _expectedValue;
+        static string _resultingValue;
+
         Establish context = () =>
             {
-                driver = new FirefoxDriver();
-                driver.Navigate().GoToUrl("http://api.jquery.com/find/");
-                JQueryFactory jqf = new JQueryFactory(driver);
-                JQuerySelector jqs = jqf.Query("#jq-primarySearch");
-                expectedValue = "TestString";
-                jqt = jqs.Get();
-                jqt._webElement.SendKeys(expectedValue);
+                JQuerySelector jqs = jQueryFactory.Query("#jq-primarySearch");
+                _expectedValue = "TestString";
+                _jQueryTag = jqs.Get();
+                _jQueryTag.WebElement.SendKeys(_expectedValue);
             };
 
-        Because of = () => resultingValue = jqt.val();
+        Because of = () => _resultingValue = _jQueryTag.val();
 
-        It should_return_value = () => resultingValue.ShouldEqual(expectedValue);
-
-        Cleanup loaded_context = () => driver.Close();
-
-        static JQueryTag jqt;
-        static string expectedValue;
-        static string resultingValue;
-        static FirefoxDriver driver;
+        It should_return_value = () => _resultingValue.ShouldEqual(_expectedValue);
     }
 }

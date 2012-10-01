@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 
 namespace JQSelenium
@@ -10,29 +8,11 @@ namespace JQSelenium
     /// </summary>
     public class JQueryTag
     {
-        #region ClassMembers
-        /// <summary>
-        /// The tag name of the HTML element.
-        /// </summary>
-        public string _tagName { get; set; }
-
-        /// <summary>
-        /// The webElement of the HTML element.
-        /// </summary>
-        public IWebElement _webElement { get; set; }
-
-        /// <summary>
-        /// The selector used to obtain the HTML element.
-        /// </summary>
-        public string _selector { get; set; }
-
         /// <summary>
         /// Used to execute javaScript code.
         /// </summary>
-        private readonly IJavaScriptExecutor _js;
-        #endregion
+        readonly IJavaScriptExecutor js;
 
-        #region Constructors
 
         public JQueryTag()
         {
@@ -40,29 +20,41 @@ namespace JQSelenium
 
         public JQueryTag(IJavaScriptExecutor js, string selector, int index, IWebElement webElement)
         {
-            this._selector = selector + "[" + Convert.ToString(index) + "]";
-            this._webElement = webElement;
-            this._tagName = webElement.TagName;
-            this._js = js;
+            Selector = selector + "[" + Convert.ToString(index) + "]";
+            WebElement = webElement;
+            TagName = webElement.TagName;
+            this.js = js;
         }
 
-        #endregion Constructors
+        /// <summary>
+        /// The tag name of the HTML element.
+        /// </summary>
+        public string TagName { get; set; }
 
-        #region add()
+        /// <summary>
+        /// The webElement of the HTML element.
+        /// </summary>
+        public IWebElement WebElement { get; set; }
+
+        /// <summary>
+        /// The selector used to obtain the HTML element.
+        /// </summary>
+        public string Selector { get; set; }
+
         /// <summary>
         ///  Add elements to the set of matched elements.
         /// <para>Source: http://api.jquery.com/add/ </para>
         /// </summary>
-        /// <param name="selector_elements_html">
+        /// <param name="selectorElementsHtml">
         /// <para>-selector A string representing a selector expression to find additional elements to add 
         /// to the set of matched elements.</para>
         /// <para>-elements One or more elements to add to the set of matched elements.</para>
         /// <para>-html An HTML fragment to add to the set of matched elements.</para>
         /// </param>
         /// <returns>JQuerySelector</returns>
-        public JQuerySelector add(string selector_elements_html)
+        public JQuerySelector add(string selectorElementsHtml)
         {
-            return ToJQuerySelector().add(selector_elements_html);
+            return ToJQuerySelector().add(selectorElementsHtml);
         }
 
         /// <summary>
@@ -82,28 +74,23 @@ namespace JQSelenium
         {
             return ToJQuerySelector().add(selector, context);
         }
-        #endregion add()
 
-        #region addClass()
         /// <summary>
         /// Adds the specified class(es) to each of the set of matched elements.
         /// <para>Source: http://api.jquery.com/addClass/ </para>
         /// </summary>
-        /// <param name="className_function"><para>-className: One or more class names to be 
+        /// <param name="classNameFunction"><para>-className: One or more class names to be 
         /// added to the class attribute of each matched element.</para>
         /// <para>-function(index, currentClass): A function returning one or more space-separated 
         /// class names to be added to the existing class name(s). Receives the index position of 
         /// the element in the set and the existing class name(s) as arguments. Within the function, 
         /// this refers to the current element in the set.</para></param>
         /// <returns>JQuerySelector containing the modified elements.</returns>
-        public JQuerySelector addClass(string className_function)
+        public JQuerySelector addClass(string classNameFunction)
         {
-            
-            return ToJQuerySelector().addClass(className_function);
+            return ToJQuerySelector().addClass(classNameFunction);
         }
-        #endregion addClass()
 
-        #region after()
         /// <summary>
         /// Insert content, specified by the parameter, after each element in the set of matched elements.
         /// <para>Source: http://api.jquery.com/after/ </para>
@@ -112,14 +99,13 @@ namespace JQSelenium
         /// each element in the set of matched elements.</para>
         /// <para>-content: One or more additional DOM elements, arrays of elements, HTML strings, or jQuery objects to 
         /// insert after each element in the set of matched elements.</para></param>
+        /// <param name="parameters">Can recieve any number of parameters</param>
         /// <returns>JQuerySelector containing the modified elements.</returns>
         public JQuerySelector after(params string[] parameters)
         {
             return ToJQuerySelector().after(parameters);
         }
-        #endregion
 
-        #region append()
         /// <summary>
         /// Insert content, specified by the parameter, to the end of each element in the set of matched elements.
         /// <para>Source: http://api.jquery.com/append/ </para>
@@ -130,14 +116,13 @@ namespace JQSelenium
         /// <para>-content: One or more additional DOM elements, arrays of elements, HTML strings, or jQuery objects to 
         /// insert at the end of each element in the set of matched elements.</para>
         /// </param>
+        /// <param name="parameters">Can recieve any number of strings </param>
         /// <returns>JQuerySelector containing the modified elements.</returns>
         public JQuerySelector append(params string[] parameters)
         {
             return ToJQuerySelector().append(parameters);
         }
-        #endregion 
 
-        #region appendTo()
         /// <summary>
         /// Insert every element in the set of matched elements to the end of the target.
         /// <para>Source: http://api.jquery.com/appendTo/ </para>
@@ -149,78 +134,70 @@ namespace JQSelenium
         {
             return ToJQuerySelector().appendTo(target);
         }
-        #endregion
 
-        #region attr()
         /// <summary>
         /// Get the value of an attribute for the first element in the set of matched elements.
         /// <para>Source: http://api.jquery.com/attr/#attr1 </para>
         /// </summary>
-        /// <param name="attribute_name">The name of the attribute to get.</param>
+        /// <param name="attributeName">The name of the attribute to get.</param>
         /// <returns>String containing the element's attribute value.</returns>
-        public string attr(string attribute_name)
+        public string attr(string attributeName)
         {
-            return _webElement.GetAttribute(attribute_name);
+            return WebElement.GetAttribute(attributeName);
         }
 
         /// <summary>
         /// Set one or more attributes for the set of matched elements.
         /// <para>Source: http://api.jquery.com/attr/#attr2 </para>
         /// </summary>
-        /// <param name="attribute_name">The name of the attribute to set.</param>
-        /// <param name="new_value">A value to set for the attribute.</param>
+        /// <param name="attributeName">The name of the attribute to set.</param>
+        /// <param name="newValue">A value to set for the attribute.</param>
         /// <returns>JQuerySelector containing the modified elements.</returns>
-        public JQuerySelector attr(string attribute_name, string new_value)
+        public JQuerySelector attr(string attributeName, string newValue)
         {
-            return ToJQuerySelector().attr(attribute_name, new_value);
+            return ToJQuerySelector().attr(attributeName, newValue);
         }
-        #endregion
 
-        #region css()
         /// <summary>
         /// Get the value of a style property for the first element in the set of matched elements.
         /// <para>Source: http://api.jquery.com/css/#css1 </para>
         /// </summary>
-        /// <param name="css_property">A CSS property.</param>
+        /// <param name="cssProperty">A CSS property.</param>
         /// <returns>String containing the CSS property value.</returns>
-        public string css(string css_property)
+        public string css(string cssProperty)
         {
-            return _webElement.GetCssValue(css_property);
+            return WebElement.GetCssValue(cssProperty);
         }
 
         /// <summary>
         /// Set one or more CSS properties for the set of matched elements.
         /// <para>Source: http://api.jquery.com/css/#css2 </para>
         /// </summary>
-        /// <param name="css_property">A CSS property name.</param>
+        /// <param name="cssProperty">A CSS property name.</param>
         /// <param name="new_value">A value to set for the property.</param>
         /// <returns>JQuerySelector containing the modified elements</returns>
-        public JQuerySelector css (string css_property, string new_value)
+        public JQuerySelector css(string cssProperty, string new_value)
         {
-            return ToJQuerySelector().css(css_property, new_value);
+            return ToJQuerySelector().css(cssProperty, new_value);
         }
-        #endregion
 
-        #region execJS()
         ///<summary>
         /// Executes a javascript function by concatenating a prefix and a suffix to the selector of the JQueryTag.
         ///</summary>
         /// <param name="prefix">It represents all the javascript code that goes before the selector.</param>
         /// <param name="suffix">It represents all the javascript code that goes after the selector.</param>
-        private Object execJS(string prefix, string suffix)
+        Object execJS(string prefix, string suffix)
         {
-            return _js.ExecuteScript("return " + prefix + _selector + suffix);
+            return js.ExecuteScript("return " + prefix + Selector + suffix);
         }
-        #endregion
 
-        #region getters()
         /// <summary>
         /// Returns the class of the JQueryTag.
         /// </summary>
         /// <returns>A string containing the class of the JQueryTag</returns>
         public string getClass()
         {
-            return _webElement.GetAttribute("class");
+            return WebElement.GetAttribute("class");
         }
 
         /// <summary>
@@ -229,7 +206,7 @@ namespace JQSelenium
         /// <returns>An IJavaScriptExecutor</returns>
         public IJavaScriptExecutor getJS()
         {
-            return this._js;
+            return js;
         }
 
         /// <summary>
@@ -238,11 +215,9 @@ namespace JQSelenium
         /// <returns>A string containing the tag name of a webelement.</returns>
         public string GetTagName()
         {
-            return _webElement.TagName;
+            return WebElement.TagName;
         }
-        #endregion
 
-        #region hasClass()
         /// <summary>
         /// Determine whether any of the matched elements are assigned the given class.
         /// <para>Source: http://api.jquery.com/hasClass/ </para>
@@ -254,9 +229,7 @@ namespace JQSelenium
         {
             return ToJQuerySelector().hasClass(className);
         }
-        #endregion
 
-        #region html()
         /// <summary>
         /// Get the HTML contents of the first element in the set of matched elements.
         /// <para>Source: http://api.jquery.com/html/#html1 </para>
@@ -278,14 +251,12 @@ namespace JQSelenium
         {
             return ToJQuerySelector().html(htmlString);
         }
-        #endregion 
 
-        #region remove()
         /// <summary>
         /// Remove the set of matched elements from the DOM.
         /// <para>Source: http://api.jquery.com/remove/ </para>
         /// </summary>
-        public void remove ()
+        public void remove()
         {
             ToJQuerySelector().remove();
         }
@@ -296,17 +267,15 @@ namespace JQSelenium
         /// </summary>
         /// <param name="selector">A selector expression that filters the set of matched elements to be 
         /// removed.</param>
-        public void remove (string selector)
+        public void remove(string selector)
         {
             ToJQuerySelector().remove(selector);
         }
-        #endregion remove()
 
-        #region requiresApostrophe()
         /// <summary>
         /// Determines if a parameter of a javaScript function requires apostrophes around it.
         /// </summary>
-        /// <param name="parameter">The parameter of a javaScript function</param>
+        /// <param name="content"> </param>
         /// <returns>True if it requires to be wrapped in apostrophes.
         /// <para>False if it doesn't require to be wrapped in apostrophes.</para></returns>
         public bool requiresApostrophe(string content)
@@ -318,9 +287,7 @@ namespace JQSelenium
             }
             return true;
         }
-        #endregion
 
-        #region text()
         /// <summary>
         /// Get the combined text contents of each element in the set of matched elements, including their descendants.
         /// <para>Source: http://api.jquery.com/text/#text1 </para>
@@ -328,14 +295,14 @@ namespace JQSelenium
         /// <returns>A string containing the text of an HTML element.</returns>
         public string text()
         {
-            return _webElement.Text;
+            return WebElement.Text;
         }
 
         /// <summary>
         ///  Set the content of each element in the set of matched elements to the specified text.
         /// <para>Source: http://api.jquery.com/text/#text2 </para>
         /// </summary>
-        /// <param name="textString_function">
+        /// <param name="textString">
         /// <para>textString A string of text to set as the content of each matched element.</para>
         /// <para>function(index, text) A function returning the text content to set. 
         /// Receives the index position of the element in the set and the old text value as arguments.</para>
@@ -343,33 +310,27 @@ namespace JQSelenium
         /// <returns>JQuerySelector containing the modified elements.</returns>
         public JQuerySelector text(string textString)
         {
-            return ToJQuerySelector().text(textString); 
+            return ToJQuerySelector().text(textString);
         }
-        #endregion text()
 
-        #region toJQuerySelector()
         /// <summary>
         /// Includes the JQueryTag within a JQuerySelector.
         /// </summary>
         /// <returns>JQuerySelector with a single JQueryTag.</returns>
-        private JQuerySelector ToJQuerySelector()
+        JQuerySelector ToJQuerySelector()
         {
             return new JQuerySelector(this);
         }
-        #endregion
 
-        #region toString()
         /// <summary>
         /// Returns a string that represents the current JQueryTag.
         /// </summary>
         /// <returns>A string that represents the current JQueryTag.</returns>
         public override string ToString()
         {
-            return _selector;
+            return Selector;
         }
-        #endregion
 
-        #region val()
         /// <summary>
         /// Get the current value of the first element in the set of matched elements.
         /// <para>Source: http://api.jquery.com/val/#val1 </para>
@@ -392,6 +353,5 @@ namespace JQSelenium
         {
             return ToJQuerySelector().val(value);
         }
-        #endregion val()
     }
 }

@@ -1,30 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Machine.Specifications;
-using OpenQA.Selenium.Firefox;
+﻿using Machine.Specifications;
 
 namespace JQSelenium.Specs
 {
-    class when_removing_an_html_element
+    internal class when_removing_an_html_element : when_getting_value_of_element
     {
-        Establish context = () =>
-            {
-                driver = new FirefoxDriver();
-                driver.Navigate().GoToUrl("http://api.jquery.com/find/");
-                jqf = new JQueryFactory(driver);
-                jqs = jqf.Query("h1");
-            };
+        static JQuerySelector _jQuerySelector;
 
-        Because of = () => jqs.remove();
+        Establish context = () => { _jQuerySelector = jQueryFactory.Query("h1"); };
 
-        It should_remove_HTML_elements = () => jqf.Query("h1").ShouldBeEmpty();
+        Because of = () => _jQuerySelector.remove();
 
-        Cleanup loaded_context = () => driver.Close();
-
-        static JQuerySelector jqs;
-        static JQueryFactory jqf;
-        static FirefoxDriver driver;
+        It should_remove_html_elements = () => jQueryFactory.Query("h1").ShouldBeEmpty();
     }
 }

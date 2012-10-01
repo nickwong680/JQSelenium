@@ -2,7 +2,7 @@ using Machine.Specifications;
 
 namespace JQSelenium.Specs
 {
-    class when_adding_content_before_selector : given_a_jquery_factory_context
+    internal class when_adding_content_before_selector : given_a_jquery_factory_context
     {
         static string _newText;
         static string _newTag;
