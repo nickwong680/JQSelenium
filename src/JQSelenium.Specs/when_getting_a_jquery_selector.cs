@@ -1,5 +1,6 @@
 //using System.Windows.Forms;
 
+using System.Linq;
 using AcklenAvenue.Testing.ExpectedObjects;
 using Machine.Specifications;
 
@@ -7,18 +8,10 @@ namespace JQSelenium.Specs
 {
     public class when_getting_a_jquery_selector : given_a_jquery_factory_context
     {
-        static JQueryFactory _jquery;
         static JQuerySelector _result;
-        static JQuerySelector _expectedJquerySelectorSelector;
+        
+        Because of = () => _result = jQueryFactory.Query("body");
 
-        Establish context = () =>
-            {
-                _expectedJquerySelectorSelector = _jquery.Query("body");
-                _expectedJquerySelectorSelector.Get();
-            };
-
-        Because of = () => _result = _jquery.Query("body");
-
-        It should_return_the_expected_tag = () => _result.IsExpectedToBeLike(_expectedJquerySelectorSelector);
+        It should_return_the_expected_tag = () => _result.First().TagName.ShouldEqual("body");
     }
 }
