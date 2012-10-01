@@ -9,7 +9,7 @@ TRXFILE = File.join(REPORTS_PATH, SOLUTION + '.trx')
 CONFIG = "Debug"
 
 task :default => [:all]
-
+ 
 task :all => [:prepare, :compile, :tests, :deploy ]
 
 task :prepare do
