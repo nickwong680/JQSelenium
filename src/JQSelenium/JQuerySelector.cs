@@ -629,9 +629,26 @@ namespace JQSelenium
             execJS("jQuery(", ").removeClass('" + className + "');");
         }
 
-        public void before(string newTag)
+        public JQuerySelector before(params string[] content_content)
         {
-            
+            Object result;
+            string resultingContent = "";
+            foreach (string s in content_content)
+            {
+                if (requiresApostrophe(s))
+                {
+                    resultingContent += "'" + s + "',";
+                }
+                else
+                {
+                    resultingContent += s + ",";
+                }
+            }
+            resultingContent = resultingContent.Remove(resultingContent.Length - 1);
+            Console.WriteLine(resultingContent);
+            result = execJS("jQuery(", ").before(" + resultingContent + ");");
+            _subset = objectToJQueryTagList(result);
+            return this;
         }
     }
 }
