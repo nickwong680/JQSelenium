@@ -26,6 +26,6 @@ namespace JQSelenium.Specs
                 _textExpected = (_initialText + _appendingText).ToUpper();
             };
 
-        It should_have_the_expected_text = () => _testingElement.text().ShouldEqual(_textExpected);
+        It should_have_the_expected_text = () => _testingElement.text().ShouldBeEqualIgnoringCase(_textExpected);
     }
 }

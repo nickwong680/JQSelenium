@@ -38,13 +38,13 @@ namespace JQSelenium
 
             if (result is ReadOnlyCollection<Object>)
             {
-                jqs = new JQuerySelector(_js, "jQuery.find('" + selector + "')", new List<IWebElement>());
+                jqs = new JQuerySelector(_js, "jQuery(jQuery.find('" + selector + "'))", new List<IWebElement>());
             }else
             {
                 var queryResult = (ReadOnlyCollection<IWebElement>)result;
                 var queryResultList = queryResult.ToList();
 
-                jqs = new JQuerySelector(_js, "jQuery.find('" + selector + "')", queryResultList);
+                jqs = new JQuerySelector(_js, "jQuery(jQuery.find('" + selector + "'))", queryResultList);
             }
             return jqs;
 

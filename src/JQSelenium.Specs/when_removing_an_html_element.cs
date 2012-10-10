@@ -2,7 +2,7 @@
 
 namespace JQSelenium.Specs
 {
-    internal class when_removing_an_html_element : when_getting_value_of_element
+    internal class when_removing_an_html_element : given_a_jquery_factory_context
     {
         static JQuerySelector _jQuerySelector;
 

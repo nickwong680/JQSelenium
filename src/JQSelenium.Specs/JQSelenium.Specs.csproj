@@ -36,6 +36,9 @@
     <Reference Include="AcklenAvenue.Testing.ExpectedObjects">
       <HintPath>..\..\lib\AcklenAvenue.Testing.ExpectedObjects.1.0.0.0\lib\net40\AcklenAvenue.Testing.ExpectedObjects.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\lib\Castle.Core.3.0.0.4001\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="ExpectedObjects">
       <HintPath>..\..\lib\ExpectedObjects.1.0.0.2\lib\ExpectedObjects.dll</HintPath>
     </Reference>
@@ -51,8 +54,9 @@
     <Reference Include="Moq">
       <HintPath>..\..\lib\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\lib\Newtonsoft.Json.4.5.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Newtonsoft.Json.4.5.10\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -65,14 +69,22 @@
     <Reference Include="WebDriver">
       <HintPath>..\..\lib\Selenium.WebDriver.2.25.1\lib\net40\WebDriver.dll</HintPath>
     </Reference>
+    <Reference Include="WebDriver.Support">
+      <HintPath>..\..\lib\Selenium.Support.2.25.1\lib\net40\WebDriver.Support.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="given_a_jquery_factory_context.cs" />
     <Compile Include="when_adding_content_before_selector.cs" />
+    <Compile Include="when_clicking_an_element.cs" />
+    <Compile Include="when_concatenating_own_element_to_set_of_elemets.cs" />
+    <Compile Include="when_finding_elements_within_elements.cs" />
+    <Compile Include="when_getting_first_element_of_selector.cs" />
     <Compile Include="when_getting_html_of_element.cs" />
     <Compile Include="when_checking_if_an_element_has_a_class.cs" />
     <Compile Include="when_getting_attributes_of_an_element.cs" />
     <Compile Include="when_getting_a_css_property_from_an_element.cs" />
+    <Compile Include="when_getting_last_element_of_selector.cs" />
     <Compile Include="when_getting_value_of_element.cs" />
     <Compile Include="when_modifying_an_attribute_from_an_element.cs" />
     <Compile Include="when_modifying_a_css_property_from_an_element.cs" />
@@ -86,6 +98,9 @@
     <Compile Include="when_getting_a_tag.cs" />
     <Compile Include="when_getting_tag_name.cs" />
     <Compile Include="when_modifying_value_of_html_element.cs" />
+    <Compile Include="when_obtaining_element_next_to_element.cs" />
+    <Compile Include="when_obtaining_element_previous_to_elemet.cs" />
+    <Compile Include="when_obtaining_parent_of_element.cs" />
     <Compile Include="when_removing_an_html_element.cs" />
     <Compile Include="when_removing_an_html_element_using_selector.cs" />
     <Compile Include="when_removing_an_specific_class.cs" />

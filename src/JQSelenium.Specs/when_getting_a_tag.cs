@@ -15,7 +15,7 @@ namespace JQSelenium.Specs
                                    {
                                        TagName = "body",
                                        WebElement = (IWebElement) Driver.FindElementByTagName("body"),
-                                       Selector = "jQuery.find('body')[0]"
+                                       Selector = "jQuery(jQuery.find('body'))[0]"
                                    };
             };
 
