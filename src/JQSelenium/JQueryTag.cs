@@ -174,6 +174,20 @@ namespace JQSelenium
             return ToJQuerySelector().attr(attributeName, newValue);
         }
 
+        public JQuerySelector children()
+        {
+            return ToJQuerySelector().children();
+        }
+
+        /// <summary>
+        ///   Get the children of each element in the set of matched elements filtered by a selector
+        /// </summary>
+        /// <returns> jQuerySelector containing the children of the specified set of elements</returns>
+        public JQuerySelector children(string selector)
+        {
+            return ToJQuerySelector().children(selector);
+        }
+
         /// <summary>
         ///   Bind an event handler to the "click" JavaScript event, or trigger that event on an element.
         /// </summary>
@@ -375,8 +389,7 @@ namespace JQSelenium
         }
 
         /// <summary>
-        /// Get the immediately following sibling of each element in the set of matched elements. If a selector is 
-        /// provided, it retrieves the next sibling only if it matches that selector.
+        /// Get the immediately following sibling of each element in the set of matched elements. 
         /// </summary>
         /// <returns>A JQuerySelector containing the following sibling of each element in the set of elements.</returns>
         public JQuerySelector next()
@@ -384,14 +397,71 @@ namespace JQSelenium
             return ToJQuerySelector().next();
         }
 
+        /// <summary>
+        /// Get the immediately following sibling of each element in the set of matched elements filtered by a selector
+        /// </summary>
+        /// <returns>A JQuerySelector containing the following sibling of each element in the set of elements.</returns>
+        public JQuerySelector next(string selector)
+        {
+            return ToJQuerySelector().next(selector);
+        }
+
+        /// <summary>
+        /// Get all preceding siblings of each element in the set of matched elements.
+        /// </summary>
+        /// <returns> A JQuerySelector with all the previous elements </returns>
         public JQuerySelector prev()
         {
             return ToJQuerySelector().prev();
         }
 
+        /// <summary>
+        /// Get all preceding siblings of each element in the set of matched elements filtered by a selector
+        /// </summary>
+        /// <returns> A JQuerySelector with all the previous elements </returns>
+        public JQuerySelector prev(string selector)
+        {
+            return ToJQuerySelector().prev(selector);
+        }
+
+        /// <summary>
+        /// Get all the previous elements of a specific jQuerySelector 
+        /// </summary>
+        /// <returns> A JQuerySelector with all the previous elements </returns>
+        public JQuerySelector prevAll()
+        {
+            return ToJQuerySelector().prevAll();
+        }
+
+        /// <summary>
+        /// Given a jQuery object that represents a set of DOM elements, the .nextAll() method allows us to search through the successors 
+        /// of these elements in the DOM tree and construct a new jQuery object from the matching elements.
+        /// </summary>
+        /// <returns>A JQuerySelector containing the matching elements.</returns>
+        public JQuerySelector nextAll()
+        {
+            return ToJQuerySelector().nextAll();
+        }
+
+        // <summary>
+        ///   Add the previous set of elements on the stack to the current set.
+        /// </summary>
+        /// <returns> jQuerySelector containing the previous set elements and the current one </returns>
         public JQuerySelector andSelf()
         {
             return ToJQuerySelector().andSelf();
         }
+
+        // <summary>
+        ///   Compares if two JQueryTags have the same tag and webElement
+        /// </summary>
+        /// <returns> true if the JQueryTags match </returns>
+        public bool Equals(JQueryTag comparer)
+        {
+            if ((this.TagName.Equals(comparer.TagName)) && (this.WebElement.Equals(comparer.WebElement)))
+                return true;
+            return false;
+        }
+        
     }
 }

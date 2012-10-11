@@ -31,16 +31,23 @@ namespace JQSelenium
         ///   The selector provided by the JQueryFactory.
         /// </summary>
         string selector;
+        
+        /// <summary>
+        ///   The number of elements in the JQuerySelector.
+        /// </summary>
+        int Count;
 
         /// <summary>
         ///   Initializes a new JQuerySelector
         /// </summary>
+
         public JQuerySelector()
         {
             _subset = new List<JQueryTag>();
             selector = "";
             iterator = 0;
             js = null;
+            Count = 0;
         }
 
         /// <summary>
@@ -60,6 +67,7 @@ namespace JQSelenium
             }
             iterator = 0;
             js = jQueryTag.getJS();
+            Count = 1;
         }
 
         /// <summary>
@@ -75,12 +83,11 @@ namespace JQSelenium
             _subset = new List<JQueryTag>();
             this.js = js;
 
-            for (int i = 0; i < subset.Count; i++)
+            for (var i = 0; i < subset.Count; i++)
             {
-                JQueryTag jqt;
                 try
                 {
-                    jqt = new JQueryTag(js, selector, i, subset[i]);
+                    var jqt = new JQueryTag(js, selector, i, subset[i]);
                     _subset.Add(jqt);
                 }
                 catch (StaleElementReferenceException)
@@ -88,24 +95,15 @@ namespace JQSelenium
                     //Do nothing.
                 }
             }
-
+            Count = _subset.Count;
         }
 
-        public int Count()
-        {
-            return _subset.Count;
-        }
-
-        public string getSelector()
-        {
-            return selector;
-        }
-
+        
         #region IEnumerable<JQueryTag> Members
 
         public IEnumerator<JQueryTag> GetEnumerator()
         {
-            for (int i = 0; i < _subset.Count; i++)
+            for (var i = 0; i < _subset.Count; i++)
             {
                 yield return _subset[i];
             }
@@ -177,6 +175,7 @@ namespace JQSelenium
             }
             _subset = objectToJQueryTagList(result);
             overwriteSelectors(newSelector);
+            Count = _subset.Count;
             return this;
         }
 
@@ -190,9 +189,10 @@ namespace JQSelenium
         public JQuerySelector add(string selector, string context)
         {
             var result = (Dictionary<string, Object>) execJS("", ".add('" + selector + "'," + context + ")");
-            string newSelector = this.selector + ".add('" + selector + "'," + context + ")";
+            var newSelector = this.selector + ".add('" + selector + "'," + context + ")";
             _subset = objectToJQueryTagList(result);
             overwriteSelectors(newSelector);
+            Count = _subset.Count;
             return this;
         }
 
@@ -443,6 +443,31 @@ namespace JQSelenium
             return false;
         }
 
+        /// <summary>
+        ///   Determines if the JQuerySelector contains any elements
+        /// </summary>
+        /// <param name="comparer">The jQuerySelector to compare with</param>
+        /// <returns> True if both jQuerySelectors have the same elements.
+        ///   <para> False they don't. </para>
+        /// </returns>
+       
+        public bool hasSameElementsOf(JQuerySelector comparer)
+        {
+            for (var i = 0; i < _subset.Count; i++)
+            {
+                try
+                {
+                    if (!_subset[i].Equals(comparer._subset[i]))
+                        return false;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
 
         /// <summary>
         ///   Get the HTML contents of the first element in the set of matched elements.
@@ -501,8 +526,8 @@ namespace JQSelenium
             if (result is Dictionary<string, Object>)
             {
                 var dictionary = (Dictionary<string, Object>) result;
-                int length = Convert.ToInt32(dictionary["length"]);
-                for (int i = 0; i < length; i++)
+                var length = Convert.ToInt32(dictionary["length"]);
+                for (var i = 0; i < length; i++)
                 {
                     jQueryTags.Add(new JQueryTag(js, selector, i, (IWebElement) dictionary[Convert.ToString(i)]));
                 }
@@ -510,7 +535,7 @@ namespace JQSelenium
             else
             {
                 var webElements = new List<IWebElement>(((ReadOnlyCollection<IWebElement>) result));
-                for (int i = 0; i < webElements.Count; i++)
+                for (var i = 0; i < webElements.Count; i++)
                 {
                     jQueryTags.Add(new JQueryTag(js, selector, i, webElements[i]));
                 }
@@ -685,29 +710,131 @@ namespace JQSelenium
         }
 
         /// <summary>
-        /// Get the immediately following sibling of each element in the set of matched elements. If a selector is 
-        /// provided, it retrieves the next sibling only if it matches that selector.
+        /// Get the immediately following sibling of each element in the set of matched elements. 
         /// </summary>
         /// <returns>A JQuerySelector containing the following sibling of each element in the set of elements.</returns>
         public JQuerySelector next()
         {
-            Object result = execJS("", ".next()");
-            List<IWebElement> webElements = objectToWebElementList(result);
+            var result = execJS("", ".next()");
+            var webElements = objectToWebElementList(result);
             return new JQuerySelector(js, selector+".next()",webElements);
         }
 
+        /// <summary>
+        /// Get the immediately following sibling of each element in the set of matched elements if they match the selector provided.
+        /// </summary>
+        /// <returns>A JQuerySelector containing the following sibling of each element in the set of elements.</returns>
+        public JQuerySelector next(string selector)
+        {
+            var result = execJS("", ".next(" + selector + ")");
+            var webElements = objectToWebElementList(result);
+            return new JQuerySelector(js, selector + ".next()", webElements);
+        }
+
+
+        /// <summary>
+        /// Given a jQuery object that represents a set of DOM elements, the .nextAll() method allows us to search through the successors 
+        /// of these elements in the DOM tree and construct a new jQuery object from the matching elements.
+        /// </summary>
+        /// <returns>A JQuerySelector containing the matching elements.</returns>
+        public JQuerySelector nextAll()
+        {
+            var preResult = execJS("", ".nextAll()");
+            var webElements = objectToWebElementList(preResult);
+            return new JQuerySelector(js, selector + ".nextAll()", webElements);
+        }
+
+        /// <summary>
+        /// Get all preceding siblings of each element in the set of matched elements.
+        /// </summary>
+        /// <returns> A JQuerySelector with all the previous elements </returns>
         public JQuerySelector prev()
         {
-            Object result = execJS("", ".prev()");
-            List<IWebElement> webElements = objectToWebElementList(result);
+            var result = execJS("", ".prev()");
+            var webElements = objectToWebElementList(result);
             return new JQuerySelector(js, selector + ".prev()", webElements);
         }
 
+        /// <summary>
+        /// Get all preceding siblings of each element in the set of matched elements filtered by a selector
+        /// </summary>
+        /// <returns> A JQuerySelector with all the previous elements </returns>
+        public JQuerySelector prev(string selector)
+        {
+            var result = execJS("", ".prev(" + selector + ")");
+            var webElements = objectToWebElementList(result);
+            return new JQuerySelector(js, selector + ".prev()", webElements);
+        }
+
+        /// <summary>
+        /// Get all the previous elements of a specific jQuerySelector 
+        /// </summary>
+        /// <returns> A JQuerySelector with all the previous elements </returns>
+        public JQuerySelector prevAll()
+        {
+            var preResult = execJS("", ".prevAll()");
+            var webElements = objectToWebElementList(preResult);
+            return new JQuerySelector(js, selector + ".prevAll()", webElements);
+        }
+
+
+        /// <summary>
+        /// Given a jQuery object that represents a set of DOM elements, the .summary() method allows us see the elements and their tags to see
+        /// wich elements we have in the selector
+        /// </summary>
+        /// <returns>A String with the structure tag: text of all the elements within the selector.</returns>
+        public string summary()
+        {
+            var result = "";
+            foreach (var element in _subset)
+            {
+                result += element.TagName + ": " + element.text() + "\n";
+            }
+            return result;
+        }
+
+        // <summary>
+        ///   Add the previous set of elements on the stack to the current set.
+        /// </summary>
+        /// <returns> jQuerySelector containing the previous set elements and the current one </returns>
         public JQuerySelector andSelf()
         {
-            Object result = execJS("", ".andSelf()");
-            List<IWebElement> webElements = objectToWebElementList(result);
+            var result = execJS("", ".andSelf()");
+            var webElements = objectToWebElementList(result);
             return new JQuerySelector(js, selector + ".andSelf()", webElements);
         }
+
+        /// <summary>
+        ///   Get the children of each element in the set of matched elements.
+        /// </summary>
+        /// <returns> jQuerySelector containing the children of the current set of elements</returns>
+        public JQuerySelector children()
+        {
+            var preResult = execJS("", ".children()");
+            var webElements = objectToWebElementList(preResult);
+            return new JQuerySelector(js, selector + ".children()", webElements);
+        }
+
+        /// <summary>
+        ///   Get the children of each element in the set of matched elements filtered by a selector
+        /// </summary>
+        /// <returns> jQuerySelector containing the children of the specified set of elements</returns>
+        public JQuerySelector children(string selector)
+        {
+            var preResult = execJS("", ".children(" + selector + ")");
+            var webElements = objectToWebElementList(preResult);
+            return new JQuerySelector(js, selector + ".children()", webElements);
+        }
+
+
+        /// <summary>
+        ///   Get the selector of the current jQuerySelector
+        /// </summary>
+        /// <returns> a string representing the selector of the jQuerySelector </returns>
+        public string getSelector()
+        {
+            return selector;
+        }
+
     }
 }

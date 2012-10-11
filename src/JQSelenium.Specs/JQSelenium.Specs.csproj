@@ -85,6 +85,7 @@
     <Compile Include="when_getting_attributes_of_an_element.cs" />
     <Compile Include="when_getting_a_css_property_from_an_element.cs" />
     <Compile Include="when_getting_last_element_of_selector.cs" />
+    <Compile Include="when_getting_the_children_of_a_selector.cs" />
     <Compile Include="when_getting_value_of_element.cs" />
     <Compile Include="when_modifying_an_attribute_from_an_element.cs" />
     <Compile Include="when_modifying_a_css_property_from_an_element.cs" />
@@ -98,6 +99,8 @@
     <Compile Include="when_getting_a_tag.cs" />
     <Compile Include="when_getting_tag_name.cs" />
     <Compile Include="when_modifying_value_of_html_element.cs" />
+    <Compile Include="when_obtaining_all_the_next_elements_of_an_element.cs" />
+    <Compile Include="when_obtaining_all_the_previous_elements_of_an_element.cs" />
     <Compile Include="when_obtaining_element_next_to_element.cs" />
     <Compile Include="when_obtaining_element_previous_to_elemet.cs" />
     <Compile Include="when_obtaining_parent_of_element.cs" />

@@ -11,13 +11,26 @@ The library provides the main manipulation methods in jQuery: </br>
 * add
 * addClass
 * after
+* andSelf
 * append
 * appendTo
 * attr
+* before
+* children
+* click
 * css
+* find
+* first
 * get
 * hasClass
+* html
+* last
+* next
+* parent
+* prev
+* prevAll
 * remove
+* removeClass
 * text
 * val
 
@@ -36,26 +49,25 @@ and a basic understading of jQuery.
 The library is based in three structures: 
 First you have a <b>jQueryFactory</b>. It recieves the WebDriver and executes the queries: 
 ```c#
-driver = new FirefoxDriver();
+var driver = new FirefoxDriver();
 driver.Navigate().GoToUrl("URL-you-want-to-test");
-jqf = new JQueryFactory(driver);
+var jqf = new JQueryFactory(driver);
 ```
 
 Then you can execute queries with the Query method: 
 ```c#
 	jqf.Query("body");
 ```
-
 The Query method returns a <b>jQuerySelector</b> wich is a list of <b>jQueryTags</b>, from any jQuerySelector or jQueryTag you can execute any of the methods listed above and that way you interact with the DOM.
 
 ### Example
 ```c#
-FirefoxDriver driver = new FirefoxDriver(); // new webDriver
+var driver = new FirefoxDriver(); // new webDriver
 driver.Navigate().GoToUrl("http://api.jquery.com/find/"); //Navigate to the URL
-JQueryFactory jqf = new JQueryFactory(driver); //Create the jQueryFactory
-_testing_selector = jqf.Query("h1"); //Query the element in the DOM you want to access
-_new_text = "Probando";
-_new_tag = "<p id = \"jQ-selenium\">" + _new_text + "</p>"; //new Element in the DOM will be added
+var jqf = new JQueryFactory(driver); //Create the jQueryFactory
+var _testing_selector = jqf.Query("h1"); //Query the element in the DOM you want to access
+var _new_text = "Probando";
+var _new_tag = "<p id = \"jQ-selenium\">" + _new_text + "</p>"; //new Element in the DOM will be added
 _testing_selector.after(_new_tag); //Adds the element after the previously queried element
 ```
 
