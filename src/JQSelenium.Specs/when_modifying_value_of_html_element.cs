@@ -10,13 +10,13 @@ namespace JQSelenium.Specs
 
         Establish context = () =>
             {
-                var jqs = jQueryFactory.Query("#jq-primarySearch");
+                var jqs = JQuery.Find("#jq-primarySearch");
                 _expectedValue = "TestString";
                 _jQueryTag = jqs.Get();
             };
 
-        Because of = () => _jQueryTag.val(_expectedValue);
+        Because of = () => _jQueryTag.Val(_expectedValue);
 
-        It should_return_value = () => _jQueryTag.val().ShouldEqual(_expectedValue);
+        It should_return_value = () => _jQueryTag.Val().ShouldEqual(_expectedValue);
     }
 }

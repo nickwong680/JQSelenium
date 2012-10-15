@@ -10,13 +10,13 @@ namespace JQSelenium.Specs
 
         Establish load_context = () =>
             {
-                _jQuerySelector = jQueryFactory.Query("h1");
+                _jQuerySelector = JQuery.Find("h1");
                 _jQueryTag = _jQuerySelector.Get();
                 _expectedHtml = "<p>TestHTML</p>";
             };
 
-        Because of = () => _jQueryTag.html(_expectedHtml);
+        Because of = () => _jQueryTag.Html(_expectedHtml);
 
-        It should_modify_hmtl_of_element = () => _jQueryTag.html().ShouldEqual(_expectedHtml);
+        It should_modify_hmtl_of_element = () => _jQueryTag.Html().ShouldEqual(_expectedHtml);
     }
 }

@@ -6,10 +6,10 @@ namespace JQSelenium.Specs
     {
         static JQuerySelector _jQuerySelector;
 
-        Establish context = () => { _jQuerySelector = jQueryFactory.Query("h1"); };
+        Establish context = () => { _jQuerySelector = JQuery.Find("h1"); };
 
-        Because of = () => _jQuerySelector.remove();
+        Because of = () => _jQuerySelector.Remove();
 
-        It should_remove_html_elements = () => jQueryFactory.Query("h1").ShouldBeEmpty();
+        It should_remove_html_elements = () => JQuery.Find("h1").ShouldBeEmpty();
     }
 }

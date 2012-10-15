@@ -10,12 +10,12 @@ namespace JQSelenium.Specs
 
         Establish context = () =>
             {
-                _contextSelector = jQueryFactory.Query("div#jq-primaryNavigation");
-                _expectedChildren = new JQuerySelector(jQueryFactory.Query("ul").first());
+                _contextSelector = JQuery.Find("div#jq-primaryNavigation");
+                _expectedChildren = new JQuerySelector(JQuery.Find("ul").First());
             };
 
-        Because of = () => { _result = _contextSelector.children(); };
+        Because of = () => { _result = _contextSelector.Children(); };
 
-        It should_return_all_its_children = () => _result.hasSameElementsOf(_expectedChildren).ShouldBeTrue();
+        It should_return_all_its_children = () => _result.HasSameElementsOf(_expectedChildren).ShouldBeTrue();
     }
 }

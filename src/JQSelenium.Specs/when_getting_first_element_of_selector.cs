@@ -10,13 +10,13 @@ namespace JQSelenium.Specs
 
         Establish context = () =>
             {
-                _selector = jQueryFactory.Query("h1");
+                _selector = JQuery.Find("h1");
                 _expectedResult = "JQUERY API";
             };
 
-        Because of = () => _result = _selector.first();
+        Because of = () => _result = _selector.First();
 
-        It should_return_first_element = () => _result.text().ShouldBeEqualIgnoringCase(_expectedResult);
+        It should_return_first_element = () => _result.Text().ShouldBeEqualIgnoringCase(_expectedResult);
 
         Cleanup when_finished = () => { };
     }

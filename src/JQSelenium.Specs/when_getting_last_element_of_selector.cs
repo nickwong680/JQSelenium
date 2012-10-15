@@ -11,13 +11,13 @@ namespace JQSelenium.Specs
 
         Establish context = () =>
             {
-                _selector = jQueryFactory.Query("h1");
+                _selector = JQuery.Find("h1");
                 _expectedResult = "Support and Contributions";
             };
 
-        Because of = () => _result = _selector.last();
+        Because of = () => _result = _selector.Last();
 
-        It should_return_last_element = () => _result.text().ShouldEqual(_expectedResult);
+        It should_return_last_element = () => _result.Text().ShouldEqual(_expectedResult);
 
         Cleanup when_finished = () => { };
     }

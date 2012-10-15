@@ -10,12 +10,12 @@ namespace JQSelenium.Specs
 
         Establish context = () =>
             {
-                _testSelector = jQueryFactory.Query("#jq-primaryNavigation");
-                _expectedSelector = jQueryFactory.Query("#jq-siteLogo");
+                _testSelector = JQuery.Find("#jq-primaryNavigation");
+                _expectedSelector = JQuery.Find("#jq-siteLogo");
             };
 
-        Because of = () => _result = _testSelector.prevAll();
+        Because of = () => _result = _testSelector.PrevAll();
 
-        It should_return_all_the_expected_elements = () => _result.hasSameElementsOf(_expectedSelector).ShouldBeTrue();
+        It should_return_all_the_expected_elements = () => _result.HasSameElementsOf(_expectedSelector).ShouldBeTrue();
     }
 }

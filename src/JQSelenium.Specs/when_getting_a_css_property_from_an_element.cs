@@ -11,11 +11,11 @@ namespace JQSelenium.Specs
         Establish context = () =>
             {
                 _expectedColor = "rgba(221, 221, 221, 1)";
-                var testingSelector = jQueryFactory.Query("h1");
+                var testingSelector = JQuery.Find("h1");
                 _testingTag = testingSelector.Get();
             };
 
-        Because of = () => _result = _testingTag.css("color");
+        Because of = () => _result = _testingTag.Css("color");
 
         It should_return_the_tags_name = () => _result.ShouldEqual(_expectedColor);
     }

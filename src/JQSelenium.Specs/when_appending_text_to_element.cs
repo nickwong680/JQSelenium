@@ -14,18 +14,18 @@ namespace JQSelenium.Specs
 
         Establish context = () =>
             {
-                _expectedJquerySelectorSelector = jQueryFactory.Query("h1");
+                _expectedJquerySelectorSelector = JQuery.Find("h1");
                 _testingElement = _expectedJquerySelectorSelector.Get();
-                _initialText = _testingElement.text();
+                _initialText = _testingElement.Text();
                 _appendingText = " Aw yeah";
             };
 
         Because of = () =>
             {
-                _testingElement.append(_appendingText);
+                _testingElement.Append(_appendingText);
                 _textExpected = (_initialText + _appendingText).ToUpper();
             };
 
-        It should_have_the_expected_text = () => _testingElement.text().ShouldBeEqualIgnoringCase(_textExpected);
+        It should_have_the_expected_text = () => _testingElement.Text().ShouldBeEqualIgnoringCase(_textExpected);
     }
 }

@@ -7,8 +7,8 @@ namespace JQSelenium.Specs
         const string TestString = "testString";
         static JQuerySelector _result;
 
-        Because of = () => _result = jQueryFactory.Query("body").Get().text(TestString);
+        Because of = () => _result = JQuery.Find("body").Get().Text(TestString);
 
-        It should_return_the_modified_element = () => _result.text().ShouldEqual(TestString);
+        It should_return_the_modified_element = () => _result.Text().ShouldEqual(TestString);
     }
 }

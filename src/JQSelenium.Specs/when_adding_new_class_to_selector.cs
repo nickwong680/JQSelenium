@@ -14,12 +14,12 @@ namespace JQSelenium.Specs
             {
                 _queryingTag = "h1"; // el selector al que se le va a agregar
                 _newClassToAdd = "NewClassName"; //el nombre de la clase and shit
-                _testingElement = jQueryFactory.Query(_queryingTag); //digo, el query xD
+                _testingElement = JQuery.Find(_queryingTag); //digo, el query xD
             };
 
         Because of = () =>
             {
-                _testingElement = _testingElement.addClass(_newClassToAdd);
+                _testingElement = _testingElement.AddClass(_newClassToAdd);
                 // aqui deberia agregar la clase
                 _expectedClassName = _testingElement.Get().WebElement.GetAttribute("Class");
                 //luego obtener el nombre de la clase.. y no quebrarse xD

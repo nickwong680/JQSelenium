@@ -9,22 +9,15 @@ namespace JQSelenium
     /// </summary>
     public class JQueryTag
     {
-        /// <summary>
-        ///   Used to execute javaScript code.
-        /// </summary>
-        readonly IJavaScriptExecutor js;
-
-
         public JQueryTag()
         {
         }
 
-        public JQueryTag(IJavaScriptExecutor js, string selector, int index, IWebElement webElement)
+        public JQueryTag(string selector, int index, IWebElement webElement)
         {
             Selector = selector + "[" + Convert.ToString(index) + "]";
             WebElement = webElement;
-            TagName = webElement.TagName;
-            this.js = js;
+            TagName = webElement.TagName;            
         }
 
         /// <summary>
@@ -79,9 +72,9 @@ namespace JQSelenium
         ///   <para> -html An HTML fragment to add to the set of matched elements. </para>
         /// </param>
         /// <returns> JQuerySelector </returns>
-        public JQuerySelector add(string selectorElementsHtml)
+        public JQuerySelector Add(string selectorElementsHtml)
         {
-            return ToJQuerySelector().add(selectorElementsHtml);
+            return ToJQuerySelector().Add(selectorElementsHtml);
         }
 
         /// <summary>
@@ -91,9 +84,9 @@ namespace JQSelenium
         /// <param name="selector"> A string representing a selector expression to find additional elements to add to the set of matched elements. </param>
         /// <param name="context"> The point in the document at which the selector should begin matching; similar to the context argument of the $(selector, context) method. </param>
         /// <returns> JQuerySelector </returns>
-        public JQuerySelector add(string selector, string context)
+        public JQuerySelector Add(string selector, string context)
         {
-            return ToJQuerySelector().add(selector, context);
+            return ToJQuerySelector().Add(selector, context);
         }
 
         /// <summary>
@@ -105,9 +98,9 @@ namespace JQSelenium
         ///   <para> -function(index, currentClass): A function returning one or more space-separated class names to be added to the existing class name(s). Receives the index position of the element in the set and the existing class name(s) as arguments. Within the function, this refers to the current element in the set. </para>
         /// </param>
         /// <returns> JQuerySelector containing the modified elements. </returns>
-        public JQuerySelector addClass(string classNameFunction)
+        public JQuerySelector AddClass(string classNameFunction)
         {
-            return ToJQuerySelector().addClass(classNameFunction);
+            return ToJQuerySelector().AddClass(classNameFunction);
         }
 
         /// <summary>
@@ -120,9 +113,9 @@ namespace JQSelenium
         /// </param>
         /// <param name="parameters"> Can recieve any number of parameters </param>
         /// <returns> JQuerySelector containing the modified elements. </returns>
-        public JQuerySelector after(params string[] parameters)
+        public JQuerySelector After(params string[] parameters)
         {
-            return ToJQuerySelector().after(parameters);
+            return ToJQuerySelector().After(parameters);
         }
 
         /// <summary>
@@ -135,9 +128,9 @@ namespace JQSelenium
         /// </param>
         /// <param name="parameters"> Can recieve any number of strings </param>
         /// <returns> JQuerySelector containing the modified elements. </returns>
-        public JQuerySelector append(params string[] parameters)
+        public JQuerySelector Append(params string[] parameters)
         {
-            return ToJQuerySelector().append(parameters);
+            return ToJQuerySelector().Append(parameters);
         }
 
         /// <summary>
@@ -146,9 +139,9 @@ namespace JQSelenium
         /// </summary>
         /// <param name="target"> A selector, element, HTML string, or jQuery object; the matched set of elements will be inserted at the end of the element(s) specified by this parameter. </param>
         /// <returns> JQuerySelector containing the modified elements. </returns>
-        public JQuerySelector appendTo(string target)
+        public JQuerySelector AppendTo(string target)
         {
-            return ToJQuerySelector().appendTo(target);
+            return ToJQuerySelector().AppendTo(target);
         }
 
         /// <summary>
@@ -157,7 +150,7 @@ namespace JQSelenium
         /// </summary>
         /// <param name="attributeName"> The name of the attribute to get. </param>
         /// <returns> String containing the element's attribute value. </returns>
-        public string attr(string attributeName)
+        public string Attr(string attributeName)
         {
             return WebElement.GetAttribute(attributeName);
         }
@@ -169,31 +162,31 @@ namespace JQSelenium
         /// <param name="attributeName"> The name of the attribute to set. </param>
         /// <param name="newValue"> A value to set for the attribute. </param>
         /// <returns> JQuerySelector containing the modified elements. </returns>
-        public JQuerySelector attr(string attributeName, string newValue)
+        public JQuerySelector Attr(string attributeName, string newValue)
         {
-            return ToJQuerySelector().attr(attributeName, newValue);
+            return ToJQuerySelector().Attr(attributeName, newValue);
         }
 
-        public JQuerySelector children()
+        public JQuerySelector Children()
         {
-            return ToJQuerySelector().children();
+            return ToJQuerySelector().Children();
         }
 
         /// <summary>
         ///   Get the children of each element in the set of matched elements filtered by a selector
         /// </summary>
         /// <returns> jQuerySelector containing the children of the specified set of elements</returns>
-        public JQuerySelector children(string selector)
+        public JQuerySelector Children(string selector)
         {
-            return ToJQuerySelector().children(selector);
+            return ToJQuerySelector().Children(selector);
         }
 
         /// <summary>
         ///   Bind an event handler to the "click" JavaScript event, or trigger that event on an element.
         /// </summary>
-        public void click()
+        public void Click()
         {
-            ToJQuerySelector().click();
+            ToJQuerySelector().Click();
         }
 
         /// <summary>
@@ -202,7 +195,7 @@ namespace JQSelenium
         /// </summary>
         /// <param name="cssProperty"> A CSS property. </param>
         /// <returns> String containing the CSS property value. </returns>
-        public string css(string cssProperty)
+        public string Css(string cssProperty)
         {
             return WebElement.GetCssValue(cssProperty);
         }
@@ -214,9 +207,9 @@ namespace JQSelenium
         /// <param name="cssProperty"> A CSS property name. </param>
         /// <param name="new_value"> A value to set for the property. </param>
         /// <returns> JQuerySelector containing the modified elements </returns>
-        public JQuerySelector css(string cssProperty, string new_value)
+        public JQuerySelector Css(string cssProperty, string new_value)
         {
-            return ToJQuerySelector().css(cssProperty, new_value);
+            return ToJQuerySelector().Css(cssProperty, new_value);
         }
 
         ///<summary>
@@ -224,9 +217,9 @@ namespace JQSelenium
         ///</summary>
         ///<param name="prefix"> It represents all the javascript code that goes before the selector. </param>
         ///<param name="suffix"> It represents all the javascript code that goes after the selector. </param>
-        Object execJS(string prefix, string suffix)
+        Object ExecJs(string prefix, string suffix)
         {
-            return js.ExecuteScript("return " + prefix + Selector + suffix);
+            return JQuery.JavaScriptExecutor.ExecuteScript("return " + prefix + Selector + suffix);
         }
 
         /// <summary>
@@ -236,27 +229,18 @@ namespace JQSelenium
         /// </summary>
         /// <param name="selector"> A string containing a selector expression to match elements against. </param>
         /// <returns> A JQuerySelector containing the descedants filtered by the selector. </returns>
-        public JQuerySelector find(string selector)
+        public JQuerySelector Find(string selector)
         {
-            return ToJQuerySelector().find(selector);
+            return ToJQuerySelector().Find(selector);
         }
 
         /// <summary>
         ///   Returns the class of the JQueryTag.
         /// </summary>
         /// <returns> A string containing the class of the JQueryTag </returns>
-        public string getClass()
+        public string GetClass()
         {
             return WebElement.GetAttribute("class");
-        }
-
-        /// <summary>
-        ///   Returns the IJavaScriptExecutor from the JQueryFactory
-        /// </summary>
-        /// <returns> An IJavaScriptExecutor </returns>
-        public IJavaScriptExecutor getJS()
-        {
-            return js;
         }
 
         /// <summary>
@@ -267,9 +251,9 @@ namespace JQSelenium
         /// <returns> True if anly element has the provided className.
         ///   <para> False if none of them has the provided className. </para>
         /// </returns>
-        public bool hasClass(string className)
+        public bool HasClass(string className)
         {
-            return ToJQuerySelector().hasClass(className);
+            return ToJQuerySelector().HasClass(className);
         }
 
         /// <summary>
@@ -277,9 +261,9 @@ namespace JQSelenium
         ///   <para> Source: http://api.jquery.com/html/#html1 </para>
         /// </summary>
         /// <returns> A string containing the HTML contents of the first element in the set of matched elements. </returns>
-        public string html()
+        public string Html()
         {
-            return ToJQuerySelector().html();
+            return ToJQuerySelector().Html();
         }
 
         /// <summary>
@@ -288,27 +272,27 @@ namespace JQSelenium
         /// </summary>
         /// <param name="htmlString"> A string of HTML to set as the content of each matched element. </param>
         /// <returns> JQuerySelector containing the modified elements. </returns>
-        public JQuerySelector html(string htmlString)
+        public JQuerySelector Html(string htmlString)
         {
-            return ToJQuerySelector().html(htmlString);
+            return ToJQuerySelector().Html(htmlString);
         }
 
         /// <summary>
         ///   Get the parent of each element in the current set of matched elements, optionally filtered by a selector.
         /// </summary>
         /// <returns> A JQuerySelector containing the parent of each element in the current set of elements. </returns>
-        public JQuerySelector parent()
+        public JQuerySelector Parent()
         {
-            return ToJQuerySelector().parent();
+            return ToJQuerySelector().Parent();
         }
 
         /// <summary>
         ///   Remove the set of matched elements from the DOM.
         ///   <para> Source: http://api.jquery.com/remove/ </para>
         /// </summary>
-        public void remove()
+        public void Remove()
         {
-            ToJQuerySelector().remove();
+            ToJQuerySelector().Remove();
         }
 
         /// <summary>
@@ -316,9 +300,9 @@ namespace JQSelenium
         ///   <para> Source: http://api.jquery.com/remove/ </para>
         /// </summary>
         /// <param name="selector"> A selector expression that filters the set of matched elements to be removed. </param>
-        public void remove(string selector)
+        public void Remove(string selector)
         {
-            ToJQuerySelector().remove(selector);
+            ToJQuerySelector().Remove(selector);
         }
 
         /// <summary>
@@ -328,7 +312,7 @@ namespace JQSelenium
         /// <returns> True if it requires to be wrapped in apostrophes.
         ///   <para> False if it doesn't require to be wrapped in apostrophes. </para>
         /// </returns>
-        public bool requiresApostrophe(string content)
+        public bool RequiresApostrophe(string content)
         {
             if (content.Split('(')[0].Contains("function") || content.Split('.')[0].Contains("document")
                 || content.Split('(')[0].Contains("$") || content.Split('(')[0].Contains("jQuery"))
@@ -343,12 +327,12 @@ namespace JQSelenium
         ///   <para> Source: http://api.jquery.com/text/#text1 </para>
         /// </summary>
         /// <returns> A string containing the text of an HTML element. </returns>
-        public string text()
+        public string Text()
         {
-            return ToJQuerySelector().text();
+            return ToJQuerySelector().Text();
         }
 
-        public string getSelector()
+        public string GetSelector()
         {
             return Selector;
         }
@@ -362,9 +346,9 @@ namespace JQSelenium
         ///   <para> function(index, text) A function returning the text content to set. Receives the index position of the element in the set and the old text value as arguments. </para>
         /// </param>
         /// <returns> JQuerySelector containing the modified elements. </returns>
-        public JQuerySelector text(string textString)
+        public JQuerySelector Text(string textString)
         {
-            return ToJQuerySelector().text(textString);
+            return ToJQuerySelector().Text(textString);
         }
 
         /// <summary>
@@ -372,9 +356,9 @@ namespace JQSelenium
         ///   <para> Source: http://api.jquery.com/val/#val1 </para>
         /// </summary>
         /// <returns> A string containing the current value of the first element in the set of matched elements. </returns>
-        public string val()
+        public string Val()
         {
-            return ToJQuerySelector().val();
+            return ToJQuerySelector().Val();
         }
 
         /// <summary>
@@ -383,54 +367,54 @@ namespace JQSelenium
         /// </summary>
         /// <param name="value"> A string of text or an array of strings corresponding to the value of each matched element to set as selected/checked. </param>
         /// <returns> JQuerySelector containing the modified elements. </returns>
-        public JQuerySelector val(string value)
+        public JQuerySelector Val(string value)
         {
-            return ToJQuerySelector().val(value);
+            return ToJQuerySelector().Val(value);
         }
 
         /// <summary>
         /// Get the immediately following sibling of each element in the set of matched elements. 
         /// </summary>
         /// <returns>A JQuerySelector containing the following sibling of each element in the set of elements.</returns>
-        public JQuerySelector next()
+        public JQuerySelector Next()
         {
-            return ToJQuerySelector().next();
+            return ToJQuerySelector().Next();
         }
 
         /// <summary>
         /// Get the immediately following sibling of each element in the set of matched elements filtered by a selector
         /// </summary>
         /// <returns>A JQuerySelector containing the following sibling of each element in the set of elements.</returns>
-        public JQuerySelector next(string selector)
+        public JQuerySelector Next(string selector)
         {
-            return ToJQuerySelector().next(selector);
+            return ToJQuerySelector().Next(selector);
         }
 
         /// <summary>
         /// Get all preceding siblings of each element in the set of matched elements.
         /// </summary>
         /// <returns> A JQuerySelector with all the previous elements </returns>
-        public JQuerySelector prev()
+        public JQuerySelector Prev()
         {
-            return ToJQuerySelector().prev();
+            return ToJQuerySelector().Prev();
         }
 
         /// <summary>
         /// Get all preceding siblings of each element in the set of matched elements filtered by a selector
         /// </summary>
         /// <returns> A JQuerySelector with all the previous elements </returns>
-        public JQuerySelector prev(string selector)
+        public JQuerySelector Prev(string selector)
         {
-            return ToJQuerySelector().prev(selector);
+            return ToJQuerySelector().Prev(selector);
         }
 
         /// <summary>
         /// Get all the previous elements of a specific jQuerySelector 
         /// </summary>
         /// <returns> A JQuerySelector with all the previous elements </returns>
-        public JQuerySelector prevAll()
+        public JQuerySelector PrevAll()
         {
-            return ToJQuerySelector().prevAll();
+            return ToJQuerySelector().PrevAll();
         }
 
         /// <summary>
@@ -438,21 +422,21 @@ namespace JQSelenium
         /// of these elements in the DOM tree and construct a new jQuery object from the matching elements.
         /// </summary>
         /// <returns>A JQuerySelector containing the matching elements.</returns>
-        public JQuerySelector nextAll()
+        public JQuerySelector NextAll()
         {
-            return ToJQuerySelector().nextAll();
+            return ToJQuerySelector().NextAll();
         }
 
-        // <summary>
+        /// <summary>
         ///   Add the previous set of elements on the stack to the current set.
         /// </summary>
         /// <returns> jQuerySelector containing the previous set elements and the current one </returns>
-        public JQuerySelector andSelf()
+        public JQuerySelector AndSelf()
         {
-            return ToJQuerySelector().andSelf();
+            return ToJQuerySelector().AndSelf();
         }
 
-        // <summary>
+        /// <summary>
         ///   Compares if two JQueryTags have the same tag and webElement
         /// </summary>
         /// <returns> true if the JQueryTags match </returns>

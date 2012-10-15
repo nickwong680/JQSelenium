@@ -11,10 +11,10 @@ namespace JQSelenium.Specs
         Establish context = () =>
             {
                 _testingClass = "new_Class";
-                _testingSelector = jQueryFactory.Query("h1").addClass(_testingClass);
+                _testingSelector = JQuery.Find("h1").AddClass(_testingClass);
             };
 
-        Because of = () => _hasClass = _testingSelector.hasClass(_testingClass);
+        Because of = () => _hasClass = _testingSelector.HasClass(_testingClass);
 
         It should_return_the_modified_element = () => _hasClass.ShouldBeTrue();
     }

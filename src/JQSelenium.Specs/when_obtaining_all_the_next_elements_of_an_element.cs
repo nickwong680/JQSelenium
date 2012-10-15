@@ -10,13 +10,13 @@ namespace JQSelenium.Specs
 
         Establish context = () =>
             {
-                _testSelector = jQueryFactory.Query("#jq-secondaryNavigation");
-                _expectedSelector = jQueryFactory.Query("#jq-primarySearchForm");
-                _expectedSelector.add("$('h1')[0]");
+                _testSelector = JQuery.Find("#jq-secondaryNavigation");
+                _expectedSelector = JQuery.Find("#jq-primarySearchForm");
+                _expectedSelector.Add("$('h1')[0]");
             };
 
-        Because of = () => _result = _testSelector.nextAll();
+        Because of = () => _result = _testSelector.NextAll();
 
-        It should_return_all_the_expected_elements = () => _result.hasSameElementsOf(_expectedSelector).ShouldBeTrue();
+        It should_return_all_the_expected_elements = () => _result.HasSameElementsOf(_expectedSelector).ShouldBeTrue();
     }
 }

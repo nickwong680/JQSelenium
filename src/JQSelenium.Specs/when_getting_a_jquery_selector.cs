@@ -10,7 +10,7 @@ namespace JQSelenium.Specs
     {
         static JQuerySelector _result;
         
-        Because of = () => _result = jQueryFactory.Query("body");
+        Because of = () => _result = JQuery.Find("body");
 
         It should_return_the_expected_tag = () => _result.First().TagName.ShouldEqual("body");
     }

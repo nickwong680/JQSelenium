@@ -10,12 +10,12 @@ namespace JQSelenium.Specs
 
         Establish context = () =>
             {
-                _selector = jQueryFactory.Query("h3");
+                _selector = JQuery.Find("h3");
                 _expectedResult = "entry-examples";
             };
 
-        Because of = () => _result = _selector.next();
+        Because of = () => _result = _selector.Next();
 
-        It should_return_adjacent_element = () => _result.Get().attr("id").ShouldEqual(_expectedResult);
+        It should_return_adjacent_element = () => _result.Get().Attr("id").ShouldEqual(_expectedResult);
     }
 }

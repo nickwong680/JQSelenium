@@ -13,14 +13,14 @@ namespace JQSelenium.Specs
             {
                 _newClassName = "randomClass";
                 _className = "jq-clearfix";
-                _jQuerySelector = jQueryFactory.Query("." + _className);
-                _jQuerySelector.addClass(_newClassName);
+                _jQuerySelector = JQuery.Find("." + _className);
+                _jQuerySelector.AddClass(_newClassName);
             };
 
-        Because of = () => _jQuerySelector.removeClass(_className);
+        Because of = () => _jQuerySelector.RemoveClass(_className);
 
-        It should_have_only_one_class_name = () => _jQuerySelector.hasClass(_newClassName).ShouldBeTrue();
+        It should_have_only_one_class_name = () => _jQuerySelector.HasClass(_newClassName).ShouldBeTrue();
 
-        It should_remove_the_class = () => _jQuerySelector.hasClass(_className).ShouldBeFalse();
+        It should_remove_the_class = () => _jQuerySelector.HasClass(_className).ShouldBeFalse();
     }
 }

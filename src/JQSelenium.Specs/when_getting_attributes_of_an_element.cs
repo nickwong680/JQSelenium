@@ -11,12 +11,12 @@ namespace JQSelenium.Specs
         Establish context = () =>
             {
                 _expectedClassName = "testing_class";
-                var testingSelector = jQueryFactory.Query("h1");
-                testingSelector = testingSelector.addClass(_expectedClassName);
+                var testingSelector = JQuery.Find("h1");
+                testingSelector = testingSelector.AddClass(_expectedClassName);
                 _testingTag = testingSelector.Get();
             };
 
-        Because of = () => _result = _testingTag.attr("class");
+        Because of = () => _result = _testingTag.Attr("class");
 
         It should_return_the_tags_name = () => _result.ShouldEqual(_expectedClassName);
     }

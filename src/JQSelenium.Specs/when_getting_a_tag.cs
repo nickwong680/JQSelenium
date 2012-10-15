@@ -19,7 +19,7 @@ namespace JQSelenium.Specs
                                    };
             };
 
-        Because of = () => _result = jQueryFactory.Query("body").Get();
+        Because of = () => _result = JQuery.Find("body").Get();
 
         It should_return_the_expected_tag = () => _result.IsExpectedToBeLike(_expectedTag);
     }

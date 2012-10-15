@@ -11,13 +11,13 @@ namespace JQSelenium.Specs
         Establish context = () =>
             {
                 _newColor = "rgba(0, 1, 1, 1)";
-                _testingSelector = jQueryFactory.Query("h1");
+                _testingSelector = JQuery.Find("h1");
             };
 
         Because of = () =>
             {
-                _testingSelector = _testingSelector.css("color", _newColor);
-                _result = _testingSelector.Get().css("color");
+                _testingSelector = _testingSelector.Css("color", _newColor);
+                _result = _testingSelector.Get().Css("color");
             };
 
         It should_have_the_attribute_modified = () => _result.ShouldEqual(_newColor);

@@ -11,18 +11,18 @@ namespace JQSelenium.Specs
 
         Establish context = () =>
             {
-                _testingSelector = jQueryFactory.Query("h1");
+                _testingSelector = JQuery.Find("h1");
                 _newText = "Probando";
                 _newTag = "<p id = \"jQ-selenium\">" + _newText + "</p>";
             };
 
         Because of = () =>
             {
-                _testingSelector.after(_newTag);
-                _expectedSelector = jQueryFactory.Query("#jQ-selenium");
+                _testingSelector.After(_newTag);
+                _expectedSelector = JQuery.Find("#jQ-selenium");
             };
 
-        It should_return_the_expected_tag = () => _expectedSelector.isEmpty().ShouldBeFalse();
+        It should_return_the_expected_tag = () => _expectedSelector.IsEmpty().ShouldBeFalse();
 
         Cleanup when_finished = () => Driver.Close();
     }

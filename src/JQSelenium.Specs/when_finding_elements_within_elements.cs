@@ -6,13 +6,13 @@ namespace JQSelenium.Specs
     {
         Establish context = () =>
             {
-                _selector = jQueryFactory.Query(".entry-title");
+                _selector = JQuery.Find(".entry-title");
                 _expectedResult = ".find()";
             };
 
-        Because of = () => _result = _selector.find("h1");
+        Because of = () => _result = _selector.Find("h1");
 
-        It should_return_the_child_element = () => _result.Get().text().ShouldEqual(_expectedResult);
+        It should_return_the_child_element = () => _result.Get().Text().ShouldEqual(_expectedResult);
 
         Cleanup when_finished = () => { };
 
