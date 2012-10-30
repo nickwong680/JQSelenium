@@ -7,20 +7,17 @@ namespace JQSelenium.Specs
     public class when_getting_a_tag : given_a_jquery_factory_context
     {
         static JQueryTag _result;
-        static JQueryTag _expectedTag;
+        static JQuerySelector _selector;
+        static string _expectedResult;
 
         Establish context = () =>
             {
-                _expectedTag = new JQueryTag
-                                   {
-                                       TagName = "body",
-                                       WebElement = (IWebElement) Driver.FindElementByTagName("body"),
-                                       Selector = "jQuery(jQuery.find('body'))[0]"
-                                   };
+                _expectedResult = "body";
+                _selector = JQuery.Find("body");
             };
 
-        Because of = () => _result = JQuery.Find("body").Get();
+        Because of = () => _result = _selector.Get();
 
-        It should_return_the_expected_tag = () => _result.IsExpectedToBeLike(_expectedTag);
+        It should_return_the_expected_tag = () => _result.TagName.ShouldEqual(_expectedResult);
     }
 }

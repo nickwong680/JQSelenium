@@ -402,10 +402,11 @@ namespace JQSelenium
         ///   Reduce the set of matched elements to the first in the set.
         /// </summary>
         /// <returns> A JQueryTag containing the first element of the set of elements. </returns>
-        public JQueryTag First()
+        public JQuerySelector First()
         {
             Object result = ExecJs("", ".first()");
-            return new JQueryTag(_selector, 0, ObjectToWebElementList(result)[0]);
+            List<IWebElement> webElements = ObjectToWebElementList(result);
+            return new JQuerySelector(_selector + ".first()", webElements);
         }
 
         /// <summary>
@@ -484,11 +485,11 @@ namespace JQSelenium
         ///   Reduce the set of matched elements to the final one in the set.
         /// </summary>
         /// <returns> JQueryTag containing the last element of the set of elements. </returns>
-        public JQueryTag Last()
+        public JQuerySelector Last()
         {
             Object result = ExecJs("", ".last()");
             List<IWebElement> webElements = ObjectToWebElementList(result);
-            return new JQueryTag(_selector, _subset.Count - 1, webElements[0]);
+            return new JQuerySelector(_selector + ".last()", webElements);
         }
 
 

@@ -15,7 +15,7 @@ namespace JQSelenium.Specs
                 _expectedResult = "Support and Contributions";
             };
 
-        Because of = () => _result = _selector.Last();
+        Because of = () => _result = _selector.Last().Get();
 
         It should_return_last_element = () => _result.Text().ShouldEqual(_expectedResult);
 

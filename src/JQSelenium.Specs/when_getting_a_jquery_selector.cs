@@ -12,6 +12,6 @@ namespace JQSelenium.Specs
         
         Because of = () => _result = JQuery.Find("body");
 
-        It should_return_the_expected_tag = () => _result.First().TagName.ShouldEqual("body");
+        It should_return_the_expected_tag = () => _result.First().Get().TagName.ShouldEqual("body");
     }
 }

@@ -14,7 +14,7 @@ namespace JQSelenium.Specs
                 _expectedResult = "JQUERY API";
             };
 
-        Because of = () => _result = _selector.First();
+        Because of = () => _result = _selector.First().Get();
 
         It should_return_first_element = () => _result.Text().ShouldBeEqualIgnoringCase(_expectedResult);
 

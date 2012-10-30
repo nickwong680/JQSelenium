@@ -11,7 +11,7 @@ namespace JQSelenium.Specs
         Establish context = () =>
             {
                 _contextSelector = JQuery.Find("div#jq-primaryNavigation");
-                _expectedChildren = new JQuerySelector(JQuery.Find("ul").First());
+                _expectedChildren = new JQuerySelector(JQuery.Find("ul").First().Get());
             };
 
         Because of = () => { _result = _contextSelector.Children(); };
