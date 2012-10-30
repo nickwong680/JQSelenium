@@ -12,7 +12,7 @@ namespace JQSelenium
     /// </summary>
     public class JQuery
     {
-        public static IJavaScriptExecutor JavaScriptExecutor = new FirefoxDriver();
+        public static IJavaScriptExecutor JavaScriptExecutor;
 
         /// <summary>
         /// Initializes a new JQuueryFactory.
