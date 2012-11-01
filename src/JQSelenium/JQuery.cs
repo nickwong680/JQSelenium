@@ -100,6 +100,10 @@ namespace JQSelenium
             {
                 webElements = new List<IWebElement>(((ReadOnlyCollection<IWebElement>)result));
             }
+            else if(result is ReadOnlyCollection<Object>)
+            {
+                //Do nothing.
+            }
             return webElements;
         }
     }
