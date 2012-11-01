@@ -49,7 +49,6 @@ namespace JQSelenium
             }
             else
             {
-                Console.WriteLine("f");
                 result = JavaScriptExecutor.ExecuteScript("return jQuery(jQuery.find('" + selector + "'));");
             }
 
@@ -62,7 +61,6 @@ namespace JQSelenium
                 }
                 else
                 {
-                    Console.WriteLine("f");
                     jqs = new JQuerySelector("jQuery(jQuery.find('" + selector + "'))");
                 }
             }
@@ -76,7 +74,6 @@ namespace JQSelenium
                 }
                 else
                 {
-                    Console.WriteLine("f");
                     jqs = new JQuerySelector("jQuery(jQuery.find('" + selector + "'))", queryResultList);
                 }
             }
@@ -99,7 +96,7 @@ namespace JQSelenium
                     webElements.Add((IWebElement)dictionary[Convert.ToString(i)]);
                 }
             }
-            else
+            else if(result is ReadOnlyCollection<IWebElement>)
             {
                 webElements = new List<IWebElement>(((ReadOnlyCollection<IWebElement>)result));
             }
