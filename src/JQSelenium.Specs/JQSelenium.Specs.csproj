@@ -108,6 +108,7 @@
     <Compile Include="when_removing_an_html_element_using_selector.cs" />
     <Compile Include="when_removing_an_specific_class.cs" />
     <Compile Include="when_removing_a_class.cs" />
+    <Compile Include="when_refreshing_elements.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

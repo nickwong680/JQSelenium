@@ -45,11 +45,11 @@ namespace JQSelenium
             JQuerySelector jqs;
             if (JavaScriptExecutor is ChromeDriver)
             {
-                result = JavaScriptExecutor.ExecuteScript("return jQuery('" + selector + "');");
+                result = JavaScriptExecutor.ExecuteScript("return jQuery(\"" + selector + "\");");
             }
             else
             {
-                result = JavaScriptExecutor.ExecuteScript("return jQuery(jQuery.find('" + selector + "'));");
+                result = JavaScriptExecutor.ExecuteScript("return jQuery(jQuery.find(\"" + selector + "\"));");
             }
 
 
@@ -57,11 +57,11 @@ namespace JQSelenium
             {
                 if (JavaScriptExecutor is ChromeDriver)
                 {
-                    jqs = new JQuerySelector("jQuery('" + selector + "')");
+                    jqs = new JQuerySelector("jQuery(\"" + selector + "\")");
                 }
                 else
                 {
-                    jqs = new JQuerySelector("jQuery(jQuery.find('" + selector + "'))");
+                    jqs = new JQuerySelector("jQuery(jQuery.find(\"" + selector + "\"))");
                 }
             }
             else
@@ -70,15 +70,21 @@ namespace JQSelenium
 
                 if (JavaScriptExecutor is ChromeDriver)
                 {
-                    jqs = new JQuerySelector("jQuery('" + selector + "')", queryResultList);
+                    jqs = new JQuerySelector("jQuery(\"" + selector + "\")", queryResultList);
                 }
                 else
                 {
-                    jqs = new JQuerySelector("jQuery(jQuery.find('" + selector + "'))", queryResultList);
+                    jqs = new JQuerySelector("jQuery(jQuery.find(\"" + selector + "\"))", queryResultList);
                 }
             }
             return jqs;
         }
+
+        public static Object executeJavascript(string javascript)
+        {
+            return JavaScriptExecutor.ExecuteScript(javascript);
+        }
+
         /// <summary>
         ///   Converts an object into a list of web elements.
         /// </summary>
