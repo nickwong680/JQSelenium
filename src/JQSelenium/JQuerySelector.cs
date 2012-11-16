@@ -618,7 +618,7 @@ namespace JQSelenium
                     webElements.Add((IWebElement) dictionary[Convert.ToString(i)]);
                 }
             }
-            else
+            else if (result is ReadOnlyCollection<IWebElement>)
             {
                 webElements = new List<IWebElement>(((ReadOnlyCollection<IWebElement>) result));
             }
