@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
 
 namespace JQSelenium
 {
@@ -95,18 +93,18 @@ namespace JQSelenium
             var webElements = new List<IWebElement>();
             if (result is Dictionary<string, Object>)
             {
-                var dictionary = (Dictionary<string, Object>)result;
+                var dictionary = (Dictionary<string, Object>) result;
                 int length = Convert.ToInt32(dictionary["length"]);
                 for (int i = 0; i < length; i++)
                 {
-                    webElements.Add((IWebElement)dictionary[Convert.ToString(i)]);
+                    webElements.Add((IWebElement) dictionary[Convert.ToString(i)]);
                 }
             }
-            else if(result is ReadOnlyCollection<IWebElement>)
+            else if (result is ReadOnlyCollection<IWebElement>)
             {
-                webElements = new List<IWebElement>(((ReadOnlyCollection<IWebElement>)result));
+                webElements = new List<IWebElement>(((ReadOnlyCollection<IWebElement>) result));
             }
-            else if(result is ReadOnlyCollection<Object>)
+            else if (result is ReadOnlyCollection<Object>)
             {
                 //Do nothing.
             }
