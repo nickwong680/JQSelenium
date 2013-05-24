@@ -11,10 +11,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes></releaseNotes>
-    <copyright>Copyright 2012 Acklen Avenue, LLC</copyright>
-    <tags>Selenium JQuery</tags>
+    <copyright>Copyright 2013 Acklen Avenue, LLC</copyright>
+    <tags>JQuery Selenium</tags>
 	<dependencies>
-		<dependency id="Selenium.WebDriver" version="2.25.1" />
+		<dependency id="Selenium.WebDriver" version="2.33.0" />
+    <dependency id="Selenium.Support" version="2.33.0" />
 	</dependencies>
   </metadata>
 </package>
