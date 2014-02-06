@@ -11,13 +11,14 @@ The library provides the main manipulation methods in jQuery: </br>
 * add
 * addClass
 * after
-* andSelf
+* addBack
 * append
 * appendTo
 * attr
 * before
 * children
 * click
+* closest
 * css
 * find
 * first
@@ -26,11 +27,17 @@ The library provides the main manipulation methods in jQuery: </br>
 * html
 * last
 * next
+* nextAll
+* nextUntil
 * parent
+* parents
+* parentsUntil
 * prev
 * prevAll
+* prevUntil
 * remove
 * removeClass
+* siblings
 * text
 * val
 
