@@ -207,11 +207,21 @@ namespace JQSelenium
         ///   Add the previous set of elements on the stack to the current set.
         /// </summary>
         /// <returns> jQuerySelector containing the previous set elements and the current one </returns>
+        [Obsolete("Deprecated in jQuery 1.8. Use .addBack()")]
         public JQuerySelector AndSelf()
         {
-            object result = ExecJs("", ".andSelf()");
+            return AddBack();
+        }
+
+        /// <summary>
+        ///   Add the previous set of elements on the stack to the current set.
+        /// </summary>
+        /// <returns> jQuerySelector containing the previous set elements and the current one </returns>
+        public JQuerySelector AddBack()
+        {
+            object result = ExecJs("", ".addBack()");
             List<IWebElement> webElements = ObjectToWebElementList(result);
-            return new JQuerySelector(_selector + ".andSelf()", webElements);
+            return new JQuerySelector(_selector + ".addBack()", webElements);
         }
 
         /// <summary>
@@ -540,6 +550,17 @@ namespace JQSelenium
         }
 
         /// <summary>
+        ///   Gets the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.
+        /// </summary>
+        /// <returns> A JQuerySelector containing the closest element matching the selector. </returns>
+        public JQuerySelector Closest(string selector)
+        {
+            object result = ExecJs("", ".closest('" + selector + "')");
+            List<IWebElement> webElements = ObjectToWebElementList(result);
+            return new JQuerySelector(_selector + ".closest()", webElements);
+        }
+
+        /// <summary>
         ///   Get the immediately following sibling of each element in the set of matched elements.
         /// </summary>
         /// <returns> A JQuerySelector containing the following sibling of each element in the set of elements. </returns>
@@ -556,7 +577,7 @@ namespace JQSelenium
         /// <returns> A JQuerySelector containing the following sibling of each element in the set of elements. </returns>
         public JQuerySelector Next(string selector)
         {
-            object result = ExecJs("", ".next(" + selector + ")");
+            object result = ExecJs("", ".next('" + selector + "')");
             List<IWebElement> webElements = ObjectToWebElementList(result);
             return new JQuerySelector(selector + ".next()", webElements);
         }
@@ -571,6 +592,29 @@ namespace JQSelenium
             object preResult = ExecJs("", ".nextAll()");
             List<IWebElement> webElements = ObjectToWebElementList(preResult);
             return new JQuerySelector(_selector + ".nextAll()", webElements);
+        }
+
+        /// <summary>
+        ///   Given a jQuery object that represents a set of DOM elements, the .nextAll() method allows us to search through the successors 
+        ///   of these elements in the DOM tree and construct a new jQuery object from elements matching the selector provided.
+        /// </summary>
+        /// <returns> A JQuerySelector containing the matching elements. </returns>
+        public JQuerySelector NextAll(string selector)
+        {
+            object preResult = ExecJs("", ".nextAll('" + selector + "')");
+            List<IWebElement> webElements = ObjectToWebElementList(preResult);
+            return new JQuerySelector(_selector + ".nextAll()", webElements);
+        }
+
+        /// <summary>
+        ///   Gets all following siblings of each element up to but not including the element matched by selector.
+        /// </summary>
+        /// <returns> A JQuerySelector containing the matching elements. </returns>
+        public JQuerySelector NextUntil(string selector)
+        {
+            object preResult = ExecJs("", ".nextUntil('" + selector + "')");
+            List<IWebElement> webElements = ObjectToWebElementList(preResult);
+            return new JQuerySelector(_selector + ".nextUntil()", webElements);
         }
 
         /// <summary>
@@ -650,6 +694,28 @@ namespace JQSelenium
         }
 
         /// <summary>
+        ///   Get the ancestors of each element in the current set of matched elements, optionally filtered by a selector.
+        /// </summary>
+        /// <returns> A JQuerySelector containing the parent of each element in the current set of elements. </returns>
+        public JQuerySelector Parents(string selector)
+        {
+            Object result = ExecJs("", ".parents('" + selector + "')");
+            List<IWebElement> webElements = ObjectToWebElementList(result);
+            return new JQuerySelector(_selector + ".parents()", webElements);
+        }
+
+        /// <summary>
+        ///   Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector.
+        /// </summary>
+        /// <returns> A JQuerySelector containing the parent of each element in the current set of elements. </returns>
+        public JQuerySelector ParentsUntil(string selector)
+        {
+            Object result = ExecJs("", ".parentsUntil('" + selector + "')");
+            List<IWebElement> webElements = ObjectToWebElementList(result);
+            return new JQuerySelector(_selector + ".parentsUntil()", webElements);
+        }
+
+        /// <summary>
         ///   Get all preceding siblings of each element in the set of matched elements.
         /// </summary>
         /// <returns> A JQuerySelector with all the previous elements </returns>
@@ -666,7 +732,7 @@ namespace JQSelenium
         /// <returns> A JQuerySelector with all the previous elements </returns>
         public JQuerySelector Prev(string selector)
         {
-            object result = ExecJs("", ".prev(" + selector + ")");
+            object result = ExecJs("", ".prev('" + selector + "')");
             List<IWebElement> webElements = ObjectToWebElementList(result);
             return new JQuerySelector(selector + ".prev()", webElements);
         }
@@ -680,6 +746,28 @@ namespace JQSelenium
             object preResult = ExecJs("", ".prevAll()");
             List<IWebElement> webElements = ObjectToWebElementList(preResult);
             return new JQuerySelector(_selector + ".prevAll()", webElements);
+        }
+
+        /// <summary>
+        ///   Get all the previous elements of a specific jQuerySelector that match a given selector.
+        /// </summary>
+        /// <returns> A JQuerySelector with all the previous elements </returns>
+        public JQuerySelector PrevAll(string selector)
+        {
+            object preResult = ExecJs("", ".prevAll('" + selector + "')");
+            List<IWebElement> webElements = ObjectToWebElementList(preResult);
+            return new JQuerySelector(_selector + ".prevAll()", webElements);
+        }
+
+        /// <summary>
+        ///   Get all preceding siblings of each element up to but not including the element matched by the selector.
+        /// </summary>
+        /// <returns> A JQuerySelector with all the previous elements </returns>
+        public JQuerySelector PrevUntil(string selector = "")
+        {
+            object preResult = ExecJs("", ".prevUntil('" + selector + "')");
+            List<IWebElement> webElements = ObjectToWebElementList(preResult);
+            return new JQuerySelector(_selector + ".prevUntil()", webElements);
         }
 
         /// <summary>
@@ -735,6 +823,17 @@ namespace JQSelenium
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        ///   Get the siblings of each element in the set of matched elements, optionally filtered by a selector
+        /// </summary>
+        /// <returns> A JQuerySelector with all the previous elements </returns>
+        public JQuerySelector Siblings(string selector = "")
+        {
+            object preResult = ExecJs("", ".siblings('" + selector + "')");
+            List<IWebElement> webElements = ObjectToWebElementList(preResult);
+            return new JQuerySelector(_selector + ".siblings()", webElements);
         }
 
         /// <summary>
