@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <id>JQSelenium</id>
+    <version>1.7.0.0</version>
+    <title>JQSelenium</title>
+    <authors>Acklen Avenue / Communispace</authors>
+    <owners>Acklen Avenue / Communispace</owners>
     <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
-    <projectUrl>https://github.com/AcklenAvenue/JQSelenium</projectUrl>
+    <projectUrl>https://github.com/amcintyre-cs/JQSelenium</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
-    <releaseNotes></releaseNotes>
-    <copyright>Copyright 2013 Acklen Avenue, LLC</copyright>
+    <description>A C# wrapper of jQuery for Selenium WebDriver.</description>
+    <releaseNotes>Moving to CSpace nuget repo</releaseNotes>
+    <copyright>Copyright 2013 Acklen Avenue, LLC. Modified by ajm 2014.</copyright>
     <tags>JQuery Selenium</tags>
-	<dependencies>
-		<dependency id="Selenium.WebDriver" version="2.33.0" />
-    <dependency id="Selenium.Support" version="2.33.0" />
-	</dependencies>
+    <dependencies>
+      <dependency id="Selenium.WebDriver" version="2.33.0" />
+      <dependency id="Selenium.Support" version="2.33.0" />
+    </dependencies>
   </metadata>
 </package>
