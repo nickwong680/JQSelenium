@@ -47,7 +47,13 @@ namespace JQSelenium
             }
             else
             {
-                result = JavaScriptExecutor.ExecuteScript("return jQuery(jQuery.find(\"" + selector + "\"));");
+                try {
+                    result = JavaScriptExecutor.ExecuteScript("return jQuery(jQuery.find(\"" + selector + "\"));");
+
+                }
+                catch (Exception) {
+                    return null;
+                }
             }
 
 

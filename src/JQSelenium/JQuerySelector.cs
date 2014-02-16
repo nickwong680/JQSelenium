@@ -346,8 +346,8 @@ namespace JQSelenium
         /// <summary>
         ///   Bind an event handler to the "click" JavaScript event, or trigger that event on an element.
         /// </summary>
-        public void Click()
-        {
+        public void Click() {
+            Attr("onclick", "window.location = this.href");
             ExecJs("", ".click()");
         }
 
